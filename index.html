@@ -1,536 +1,978 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SkillBridge – Academia–Industry Collaboration Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --paper:#F3F6FB; --ink:#12233D; --muted:#5B6B82; --line:#D5DEEA;
-  --teal:#0E8F86; --teal-soft:#DDF3F1; --amber:#F2A33A; --coral:#D9534F; --white:#fff;
-  --head:'Bricolage Grotesque','Trebuchet MS',sans-serif;
-  --body:'Source Sans 3','Segoe UI',sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.6;font-size:17px}
-h1,h2,h3{font-family:var(--head);line-height:1.15;letter-spacing:-.02em}
-a{color:inherit}
-:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-section{padding:64px 0}
-h2{font-size:clamp(1.7rem,4vw,2.4rem);margin-bottom:10px}
-.lead{color:var(--muted);max-width:60ch;margin-bottom:32px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SKILLBRIDGE | Academia-Industry Collaboration & Talent Portal</title>
+  
+  <!-- Embedded Favicon (Clean SVG Grid Icon) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23EAB308' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2' ry='2'/><line x1='8' y1='21' x2='16' y2='21'/><line x1='12' y1='17' x2='12' y2='21'/><path d='M6 8h4'/><path d='M6 12h12'/></svg>">
 
-/* nav */
-header{position:sticky;top:0;z-index:10;background:rgba(243,246,251,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:60px}
-.logo{font-family:var(--head);font-weight:800;font-size:1.25rem;text-decoration:none}
-.logo span{color:var(--teal)}
-nav .links a{margin-left:18px;text-decoration:none;font-weight:600;font-size:.95rem;color:var(--muted)}
-nav .links a:hover{color:var(--ink)}
-.user-profile{display:none;align-items:center;gap:10px;font-weight:600;font-size:.95rem}
-.avatar{width:32px;height:32px;background:var(--teal);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--head)}
-.btn{display:inline-block;background:var(--ink);color:var(--white);padding:12px 22px;border-radius:8px;font-weight:600;text-decoration:none;border:0;cursor:pointer;font-size:1rem;font-family:var(--body);transition:background 0.2s}
-.btn:hover{background:var(--teal)}
-.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--ink)}
-.btn.alt:hover{background:var(--ink);color:var(--white)}
+  <!-- Google Fonts: Oswald (Headings) & Plus Jakarta Sans (Body & UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-/* hero */
-.hero{padding:56px 0 40px}
-.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
-.hero h1{font-size:clamp(2.2rem,6vw,3.6rem);margin-bottom:16px}
-.hero p{color:var(--muted);font-size:1.12rem;margin-bottom:24px;max-width:46ch}
-.hero .btn{margin-right:10px;margin-bottom:10px}
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Oswald', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#fefce8',
+              100: '#fef9c3',
+              400: '#facc15',
+              500: '#eab308',
+              600: '#ca8a04',
+              700: '#a16207',
+              950: '#422006',
+            },
+            surface: {
+              950: '#09090b',
+              900: '#121215',
+              850: '#18181b',
+              800: '#27272a',
+              700: '#3f3f46',
+            }
+          }
+        }
+      }
+    }
+  </script>
 
-/* skill gap card */
-.gap{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 12px 30px rgba(18,35,61,.08);position:relative}
-.gap-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.gap-top strong{font-family:var(--head);font-size:1.05rem}
-select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);cursor:pointer}
-.skill{margin-bottom:14px}
-.skill-row{display:flex;justify-content:space-between;font-size:.92rem;font-weight:600;margin-bottom:5px}
-.track{position:relative;height:12px;background:var(--paper);border-radius:6px}
-.have{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--teal);transition:width .5s ease-out}
-.need{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--ink);border-radius:2px;transition:left .5s ease-out}
-.have.low{background:var(--coral)}
-.legend{display:flex;gap:16px;font-size:.82rem;color:var(--muted);margin-top:8px;flex-wrap:wrap}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
-.gap-foot{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:.95rem;display:flex;justify-content:space-between;align-items:center}
-.gap-foot b{color:var(--teal)}
-
-/* pathway */
-.path{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--white)}
-.step{padding:24px 20px;border-right:1px solid var(--line);position:relative}
-.step:last-child{border-right:0}
-.step h3{font-size:1.2rem;margin-bottom:6px}
-.step p{color:var(--muted);font-size:.95rem}
-.step:not(:last-child)::after{content:"→";position:absolute;right:-11px;top:24px;background:var(--amber);color:var(--ink);width:22px;height:22px;border-radius:50%;text-align:center;line-height:22px;font-size:.85rem;z-index:1}
-
-/* features */
-.feat{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px}
-.feat div{padding:16px 0 16px 16px;border-left:4px solid var(--teal);margin-bottom:14px}
-.feat div:nth-child(4n+3),.feat div:nth-child(4n+4){border-left-color:var(--amber)}
-.feat h3{font-size:1.05rem;margin-bottom:2px}
-.feat p{color:var(--muted);font-size:.95rem}
-
-/* roles */
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.tab{padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:var(--white);font:600 .95rem var(--body);cursor:pointer;color:var(--muted)}
-.tab:hover{border-color:var(--ink)}
-.tab[aria-selected="true"]{background:var(--ink);color:var(--white);border-color:var(--ink)}
-.panel{display:none;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:26px}
-.panel.on{display:block;animation:fadeIn 0.3s}
-.panel h3{font-size:1.4rem;margin-bottom:12px}
-.panel ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 30px;margin-bottom:20px}
-.panel li{padding-left:22px;position:relative}
-.panel li::before{content:"";position:absolute;left:0;top:.6em;width:10px;height:10px;border-radius:3px;background:var(--teal)}
-.action-btns{display:flex;gap:10px;margin-top:10px;border-top:1px solid var(--line);padding-top:20px}
-
-/* opportunities */
-.filter-bar{margin-bottom:16px;display:flex;gap:10px}
-.table{background:var(--white);border:1px solid var(--line);border-radius:14px;overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:560px}
-th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line)}
-th{font-family:var(--head);font-size:.95rem;color:var(--muted);font-weight:700}
-tr:last-child td{border-bottom:0}
-.pill{display:inline-block;padding:3px 12px;border-radius:999px;font-weight:700;font-size:.85rem;background:var(--teal-soft);color:#0A6B64}
-.pill.mid{background:#FCEBCF;color:#8A5A0B}
-.small-btn{padding:6px 14px;border-radius:6px;border:1.5px solid var(--ink);background:transparent;font:600 .85rem var(--body);cursor:pointer;transition:all 0.2s}
-.small-btn:hover{background:var(--ink);color:var(--white)}
-.small-btn.done{background:var(--teal);border-color:var(--teal);color:var(--white)}
-.small-btn.outline{border-color:var(--line);color:var(--muted)}
-.small-btn.outline.active{background:var(--ink);border-color:var(--ink);color:var(--white)}
-
-/* analytics */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
-.stat{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px}
-.stat b{font-family:var(--head);font-size:2rem;display:block;transition:all 1s}
-.stat span{color:var(--muted);font-size:.92rem}
-.chart{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:24px}
-.chart h3{font-size:1.1rem;margin-bottom:16px}
-.bar{display:grid;grid-template-columns:110px 1fr 44px;gap:12px;align-items:center;margin-bottom:12px;font-size:.92rem;font-weight:600}
-.bar div{height:16px;background:var(--paper);border-radius:8px;overflow:hidden}
-.bar div i{display:block;height:100%;background:var(--amber);border-radius:8px;width:0;transition:width 1s ease-out}
-
-footer{background:var(--ink);color:#C9D4E5;padding:36px 0;text-align:center;font-size:.92rem}
-footer b{color:var(--white)}
-
-/* Modals & Toasts */
-.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(18,35,61,0.6);backdrop-filter:blur(4px);z-index:99;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s}
-.overlay.show{display:flex;opacity:1}
-.modal{background:var(--white);border-radius:16px;padding:32px;width:90%;max-width:500px;box-shadow:0 20px 40px rgba(0,0,0,0.2);transform:translateY(20px);transition:transform 0.3s}
-.overlay.show .modal{transform:translateY(0)}
-.modal h3{margin-bottom:16px;font-size:1.5rem}
-.modal p{color:var(--muted);margin-bottom:24px}
-.modal-close{float:right;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);line-height:1}
-.course-card{border:1px solid var(--line);padding:12px;border-radius:8px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
-.course-card b{display:block;font-size:.95rem}
-.course-card span{font-size:.85rem;color:var(--muted)}
-.toast{position:fixed;bottom:20px;right:20px;background:var(--ink);color:var(--white);padding:14px 24px;border-radius:8px;box-shadow:0 10px 20px rgba(0,0,0,0.1);z-index:100;transform:translateY(100px);opacity:0;transition:all 0.3s}
-.toast.show{transform:translateY(0);opacity:1}
-.portfolio-header{display:flex;gap:16px;align-items:center;margin-bottom:24px}
-.portfolio-header .avatar{width:64px;height:64px;font-size:24px}
-
-@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-
-@media(max-width:820px){
-  .hero-grid,.feat,.panel ul{grid-template-columns:1fr}
-  .path{grid-template-columns:1fr 1fr}
-  .step:nth-child(2){border-right:0}
-  .step:nth-child(-n+2){border-bottom:1px solid var(--line)}
-  .step::after{display:none}
-  .stats{grid-template-columns:1fr}
-  nav .links{display:none}
-  section{padding:48px 0}
-  .gap-foot{flex-direction:column;align-items:flex-start;gap:12px}
-}
-</style>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #09090b;
+      color: #f4f4f5;
+    }
+    h1, h2, h3, .font-heading {
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.03em;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #09090b;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #27272a;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3f3f46;
+    }
+  </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-brand-500 selection:text-black">
 
-<header>
-  <div class="wrap nav">
-    <a class="logo" href="#top">Skill<span>Bridge</span></a>
-    <nav>
-      <div class="links">
-        <a href="#pathway">Pathway</a><a href="#features">Features</a><a href="#roles">Dashboard</a><a href="#jobs">Opportunities</a>
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-surface-850 border-b border-surface-800 text-xs py-2 px-4 text-zinc-400">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-brand-500/10 text-brand-400 font-mono text-[11px] border border-brand-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse"></span> SYSTEM ONLINE
+        </span>
+        <span class="hidden md:inline">National Academia-Industry Skill Alignment &amp; Internship Network</span>
       </div>
-    </nav>
-    <button class="btn" id="loginBtn">Log in</button>
-    <div class="user-profile" id="userProfile">
-      <div class="avatar">P</div>
-      <span>Piyush</span>
-      <button class="small-btn outline" id="logoutBtn" style="margin-left:10px">Exit</button>
-    </div>
-  </div>
-</header>
-
-<main id="top">
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <h1>Close the gap between what you learn and what industry hires for.</h1>
-      <p>One portal where students, faculty, companies and institutions find skills, courses, internships and placements.</p>
-      <a class="btn" href="#jobs">Find internships</a><a class="btn alt" href="#roles">Explore roles</a>
-    </div>
-    <div class="gap" aria-live="polite">
-      <div class="gap-top">
-        <strong>Your skill gap</strong>
-        <label><span style="position:absolute;left:-9999px">Target role</span>
-          <select id="role">
-            <option value="data">Data Analyst</option>
-            <option value="web">Web Developer</option>
-            <option value="ai">ML Engineer</option>
-          </select>
-        </label>
-      </div>
-      <div id="skills"></div>
-      <div class="legend"><span><i style="background:var(--teal)"></i>Your level</span><span><i style="background:var(--coral)"></i>Below target</span><span><i style="background:var(--ink)"></i>Role needs</span></div>
-      <div class="gap-foot">
-        <span id="gapfoot"></span>
-        <button class="small-btn" id="viewCoursesBtn">View Courses</button>
+      <div class="flex items-center gap-4 text-zinc-400">
+        <span>Framework v2.4</span>
+        <span class="text-zinc-600">|</span>
+        <a href="#analytics" class="hover:text-zinc-200 transition">Institutional Portal</a>
       </div>
     </div>
   </div>
-</section>
 
-<section id="features">
-  <div class="wrap">
-    <h2>What the portal does</h2>
-    <p class="lead"><strong>Objective:</strong> Build a unified platform that connects skills → learning → opportunities → placements, creating stronger collaboration between academia and industry.</p>
-    <div class="feat">
-      <div><h3>Skill Assessment & Profiling</h3><p>Find out what technical and soft skills you have, and see exactly where you need to improve.</p></div>
-      <div><h3>Skill Mapping</h3><p>Match your current skills directly to the right job roles, industries, and learning paths.</p></div>
-      <div><h3>Learning & Certification</h3><p>Take industry-approved courses, workshops, and training to build the skills you are missing.</p></div>
-      <div><h3>Internship Opportunities</h3><p>Companies post internships and projects, and the portal matches them with the right students.</p></div>
-      <div><h3>Placement Support</h3><p>Get job recommendations, apply easily, and get hired based on your actual skills.</p></div>
-      <div><h3>Digital Student Portfolio</h3><p>Keep all your verified skills, certificates, projects, and internships in one easy-to-share digital profile.</p></div>
-      <div><h3>Academician Opportunities</h3><p>Help teachers find industry training, research projects, and consultancy work.</p></div>
-      <div><h3>Industry–Academia Collaboration</h3><p>Bring colleges and companies together for guest lectures, mentoring, and live innovation challenges.</p></div>
-      <div><h3>Dashboards & Analytics</h3><p>Give colleges and companies clear data to track student readiness, skill growth, and what the industry needs.</p></div>
-      <div><h3>Role-Based Access</h3><p>Secure, separate dashboards with special tools just for students, teachers, colleges, and companies.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="roles">
-  <div class="wrap">
-    <h2>Interactive Dashboards</h2>
-    <p class="lead">Role-based access provides specific tools. Try the interactive features below.</p>
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" aria-selected="true" data-p="p0">Student</button>
-      <button class="tab" role="tab" aria-selected="false" data-p="p1">Academician</button>
-      <button class="tab" role="tab" aria-selected="false" data-p="p2">Industry</button>
-      <button class="tab" role="tab" aria-selected="false" data-p="p3">Institution</button>
-    </div>
-    
-    <div class="panel on" id="p0">
-      <h3>Student Workspace</h3>
-      <ul><li>Take skill assessments</li><li>See gaps against target roles</li><li>Follow learning pathways</li><li>Apply to matched internships and jobs</li><li>Build a verified digital portfolio</li><li>Track application status</li></ul>
-      <div class="action-btns">
-        <button class="btn" onclick="takeAssessment()">Take Skill Assessment</button>
-        <button class="btn alt" onclick="showPortfolio()">Generate Portfolio</button>
-      </div>
-    </div>
-    
-    <div class="panel" id="p1">
-      <h3>Academician Portal</h3>
-      <ul><li>Find faculty internships</li><li>Join industrial training and FDPs</li><li>Take up consultancy projects</li><li>Start research collaborations</li><li>Host guest lectures and workshops</li><li>Mentor student projects</li></ul>
-      <div class="action-btns">
-        <button class="btn" onclick="showToast('Research collaboration request sent to network.')">Find Collaborations</button>
-      </div>
-    </div>
-    
-    <div class="panel" id="p2">
-      <h3>Industry Dashboard</h3>
-      <ul><li>Post internships, jobs and apprenticeships</li><li>Get candidate recommendations</li><li>Shortlist by verified skills</li><li>Run innovation challenges</li><li>Offer mentorships and live projects</li><li>Track applications in one place</li></ul>
-      <div class="action-btns">
-        <button class="btn" onclick="showToast('New Internship role published successfully.')">Post Opportunity</button>
-        <button class="btn alt" onclick="showToast('Loaded 14 student recommendations.')">View Candidates</button>
-      </div>
-    </div>
-    
-    <div class="panel" id="p3">
-      <h3>Institution Analytics</h3>
-      <ul><li>Monitor skill development by department</li><li>Watch internship participation</li><li>Measure placement readiness</li><li>See skill-demand trends</li><li>Approve and verify student records</li><li>Manage documents securely</li></ul>
-      <div class="action-btns">
-        <button class="btn" onclick="document.getElementById('analytics').scrollIntoView()">View Analytics Report</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="jobs">
-  <div class="wrap">
-    <h2>Matched opportunities</h2>
-    <p class="lead">Match scores compare your verified skills with what each post needs.</p>
-    <div class="filter-bar">
-      <button class="small-btn outline active" onclick="filterJobs('all', this)">All</button>
-      <button class="small-btn outline" onclick="filterJobs('Internship', this)">Internships</button>
-      <button class="small-btn outline" onclick="filterJobs('Full-time', this)">Full-time</button>
-    </div>
-    <div class="table">
-      <table>
-        <thead><tr><th>Role</th><th>Company</th><th>Type</th><th>Match</th><th>Action</th></tr></thead>
-        <tbody id="jobsBody">
-          <tr data-type="Internship"><td>Data Analyst Intern</td><td>Nilgiri Analytics</td><td>Internship</td><td><span class="pill">92%</span></td><td><button class="small-btn apply-btn">Apply</button></td></tr>
-          <tr data-type="Full-time"><td>Frontend Developer</td><td>Marina Labs</td><td>Full-time</td><td><span class="pill">85%</span></td><td><button class="small-btn apply-btn">Apply</button></td></tr>
-          <tr data-type="Apprenticeship"><td>ML Apprentice</td><td>Kaveri AI</td><td>Apprenticeship</td><td><span class="pill mid">68%</span></td><td><button class="small-btn apply-btn">Apply</button></td></tr>
-          <tr data-type="Project"><td>IoT Live Project</td><td>Coromandel Systems</td><td>Project</td><td><span class="pill mid">61%</span></td><td><button class="small-btn apply-btn">Apply</button></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section id="analytics">
-  <div class="wrap">
-    <h2>Skill-Demand Analytics</h2>
-    <p class="lead">Live data view for institutions and industry partners.</p>
-    <div class="stats">
-      <div class="stat"><b id="counter1">0</b><span>Students Assessed</span></div>
-      <div class="stat"><b id="counter2">0</b><span>Partner Companies</span></div>
-      <div class="stat"><b id="counter3">0%</b><span>Placement Readiness</span></div>
-    </div>
-    <div class="chart" id="chartView">
-      <h3>Skills most in demand this quarter</h3>
-      <div class="bar">Python<div><i data-w="88%"></i></div>88%</div>
-      <div class="bar">Data analysis<div><i data-w="76%"></i></div>76%</div>
-      <div class="bar">Communication<div><i data-w="71%"></i></div>71%</div>
-      <div class="bar">Cloud basics<div><i data-w="58%"></i></div>58%</div>
-      <div class="bar">Teamwork<div><i data-w="52%"></i></div>52%</div>
-    </div>
-  </div>
-</section>
-</main>
-
-<footer><div class="wrap"><b>SkillBridge</b> – skills → learning → opportunities → placements.<br>Interactive Hackathon Prototype</div></footer>
-
-<!-- Modals -->
-<div class="overlay" id="modalOverlay">
-  <!-- Dynamic Modal Content Box -->
-  <div class="modal" id="modalContent"></div>
-</div>
-
-<div class="toast" id="toastMsg">Action successful!</div>
-
-<script>
-// --- Data State ---
-let rolesData = {
-  data: [["SQL", 70, 80], ["Excel", 85, 75], ["Statistics", 50, 75], ["Communication", 65, 70]],
-  web: [["HTML / CSS", 80, 85], ["JavaScript", 55, 80], ["React", 35, 70], ["Teamwork", 75, 65]],
-  ai: [["Python", 75, 85], ["Maths", 55, 80], ["ML basics", 40, 75], ["Communication", 60, 60]]
-};
-let currentGaps = []; // Store current gaps to recommend courses
-
-// --- Core Functions ---
-function drawSkills() {
-  const list = rolesData[document.getElementById('role').value];
-  let gaps = 0;
-  let html = '';
-  currentGaps = []; // Reset gaps
-
-  list.forEach(([n, h, r]) => {
-    const low = h < r; 
-    if(low) {
-      gaps++;
-      currentGaps.push({skill: n, have: h, need: r}); // Save for course generator
-    }
-    html += `<div class="skill"><div class="skill-row"><span>${n}</span><span>${h}% / ${r}%</span></div>
-    <div class="track"><div class="have ${low ? 'low' : ''}" style="width:${h}%"></div><div class="need" style="left:${r}%"></div></div></div>`;
-  });
-  
-  document.getElementById('skills').innerHTML = html;
-  const match = Math.round(list.reduce((a, [, h, r]) => a + Math.min(h, r) / r, 0) / list.length * 100);
-  document.getElementById('gapfoot').innerHTML = `Role match: <b>${match}%</b>. ${gaps} skill${gaps === 1 ? '' : 's'} below target.`;
-  
-  const courseBtn = document.getElementById('viewCoursesBtn');
-  if(gaps > 0) {
-    courseBtn.style.display = 'inline-block';
-  } else {
-    courseBtn.style.display = 'none';
-  }
-}
-
-document.getElementById('role').addEventListener('change', drawSkills);
-drawSkills(); // Init
-
-// --- Tab Switching ---
-document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
-  document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-selected', 'false'));
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
-  t.setAttribute('aria-selected', 'true');
-  document.getElementById(t.dataset.p).classList.add('on');
-}));
-
-// --- Job Filtering & Applying ---
-function filterJobs(type, btnNode) {
-  document.querySelectorAll('.filter-bar .small-btn').forEach(b => b.classList.remove('active'));
-  btnNode.classList.add('active');
-  
-  const rows = document.querySelectorAll('#jobsBody tr');
-  rows.forEach(row => {
-    if(type === 'all' || row.dataset.type === type) row.style.display = '';
-    else row.style.display = 'none';
-  });
-}
-
-document.querySelectorAll('.apply-btn').forEach(b => b.addEventListener('click', (e) => {
-  const btn = e.target;
-  if(btn.classList.contains('done')) return;
-  btn.textContent = 'Applied';
-  btn.classList.add('done');
-  showToast('Application submitted successfully!');
-}));
-
-// --- Authentication Simulation ---
-const loginBtn = document.getElementById('loginBtn');
-const logoutBtn = document.getElementById('logoutBtn');
-const userProfile = document.getElementById('userProfile');
-
-loginBtn.addEventListener('click', () => {
-  loginBtn.style.display = 'none';
-  userProfile.style.display = 'flex';
-  showToast('Logged in as Piyush (Student)');
-  
-  // Auto-switch to student tab
-  document.querySelector('.tab[data-p="p0"]').click();
-});
-
-logoutBtn.addEventListener('click', () => {
-  loginBtn.style.display = 'inline-block';
-  userProfile.style.display = 'none';
-  showToast('Logged out successfully.');
-});
-
-// --- Modal System ---
-const modalOverlay = document.getElementById('modalOverlay');
-const modalContent = document.getElementById('modalContent');
-
-function openModal(htmlContent) {
-  modalContent.innerHTML = `<button class="modal-close" onclick="closeModal()">&times;</button>` + htmlContent;
-  modalOverlay.classList.add('show');
-}
-
-function closeModal() {
-  modalOverlay.classList.remove('show');
-}
-
-// Close modal on outside click
-modalOverlay.addEventListener('click', (e) => {
-  if (e.target === modalOverlay) closeModal();
-});
-
-// --- Specific Features ---
-
-// 1. Recommended Courses
-document.getElementById('viewCoursesBtn').addEventListener('click', () => {
-  let html = `<h3>Recommended Learning Path</h3><p>Based on your skill gap analysis.</p>`;
-  if(currentGaps.length === 0) {
-    html += `<p>You meet all requirements! Consider advanced projects.</p>`;
-  } else {
-    currentGaps.forEach(g => {
-      html += `
-      <div class="course-card">
-        <div>
-          <b>${g.skill} Mastery Bootcamp</b>
-          <span>Boost your skill from ${g.have}% to 90%</span>
-        </div>
-        <button class="small-btn outline" onclick="this.textContent='Enrolled'; this.classList.add('done'); showToast('Enrolled in ${g.skill} course!')">Enroll</button>
-      </div>`;
-    });
-  }
-  openModal(html);
-});
-
-// 2. Skill Assessment
-function takeAssessment() {
-  openModal(`
-    <h3>Skill Assessment</h3>
-    <p>Simulating an AI-driven technical test...</p>
-    <div style="height:8px; background:var(--paper); border-radius:4px; overflow:hidden; margin-bottom:20px;">
-      <div id="progress" style="width:0%; height:100%; background:var(--teal); transition:width 2s;"></div>
-    </div>
-    <p id="assessmentStatus" style="font-size:0.9rem; font-weight:600;">Analyzing results...</p>
-  `);
-  
-  setTimeout(() => document.getElementById('progress').style.width = '100%', 100);
-  
-  setTimeout(() => {
-    document.getElementById('assessmentStatus').innerHTML = "<span style='color:var(--teal)'>Assessment Complete! +10% to technical skills.</span>";
-    // Simulate skill boost
-    const currentRole = document.getElementById('role').value;
-    rolesData[currentRole][0][1] += 10; // boost first skill
-    if(rolesData[currentRole][0][1] > 100) rolesData[currentRole][0][1] = 100;
-    drawSkills(); // redraw
-    showToast('Skills updated in your profile');
-    setTimeout(closeModal, 2000);
-  }, 2000);
-}
-
-// 3. Digital Portfolio
-function showPortfolio() {
-  openModal(`
-    <div class="portfolio-header">
-      <div class="avatar">P</div>
-      <div>
-        <h3 style="margin:0">Piyush Nandi</h3>
-        <p style="margin:0; font-size:0.9rem;">B.Tech Engineering • SRM Institute of Science and Technology, Ramapuram</p>
-      </div>
-    </div>
-    <div style="border-top:1px solid var(--line); padding-top:16px; margin-bottom:16px;">
-      <b>Verified Credentials</b>
-      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
-        <span class="pill">SQL (Intermediate)</span>
-        <span class="pill">Data Analytics</span>
-        <span class="pill">Python</span>
-      </div>
-    </div>
-    <div>
-      <button class="btn" style="width:100%" onclick="showToast('Portfolio link copied to clipboard!'); closeModal()">Copy Share Link</button>
-    </div>
-  `);
-}
-
-// --- UI Utilities ---
-function showToast(msg) {
-  const toast = document.getElementById('toastMsg');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 3000);
-}
-
-// Analytics Animation on Scroll
-const chartObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      // Animate numbers
-      animateValue("counter1", 0, 1240, 1500);
-      animateValue("counter2", 0, 86, 1500);
-      document.getElementById('counter3').textContent = '74%';
+  <!-- NAVIGATION HEADER -->
+  <header class="sticky top-0 z-40 bg-surface-950/90 backdrop-blur-md border-b border-surface-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
-      // Animate bars
-      document.querySelectorAll('.chart i').forEach(bar => {
-        bar.style.width = bar.getAttribute('data-w');
-      });
-      chartObserver.disconnect();
-    }
-  });
-});
-chartObserver.observe(document.getElementById('analytics'));
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-brand-500 rounded text-black flex items-center justify-center font-bold font-heading text-xl tracking-tighter">
+          SB
+        </div>
+        <div>
+          <span class="font-heading text-xl font-bold tracking-wider text-white block leading-none">SKILLBRIDGE</span>
+          <span class="text-[10px] text-zinc-400 tracking-widest uppercase block mt-0.5">Academia Industry OS</span>
+        </div>
+      </a>
 
-function animateValue(id, start, end, duration) {
-  let startTimestamp = null;
-  const step = (timestamp) => {
-    if (!startTimestamp) startTimestamp = timestamp;
-    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-    document.getElementById(id).innerHTML = Math.floor(progress * (end - start) + start);
-    if (progress < 1) window.requestAnimationFrame(step);
-  };
-  window.requestAnimationFrame(step);
-}
-</script>
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-300">
+        <a href="#skill-mapping" class="hover:text-brand-400 transition">Skill Gap Engine</a>
+        <a href="#opportunities" class="hover:text-brand-400 transition">Internships &amp; Jobs</a>
+        <a href="#academician" class="hover:text-brand-400 transition">Faculty Portal</a>
+        <a href="#portfolio" class="hover:text-brand-400 transition">Verified Portfolio</a>
+        <a href="#analytics" class="hover:text-brand-400 transition">Analytics</a>
+      </nav>
+
+      <!-- Role Selector & Actions -->
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex items-center bg-surface-900 border border-surface-800 rounded-md p-1 text-xs">
+          <label class="sr-only">Select View Role</label>
+          <select id="roleSelector" onchange="switchRole(this.value)" class="bg-transparent text-zinc-300 font-medium px-2 py-1 outline-none cursor-pointer">
+            <option value="student" class="bg-surface-900 text-white">Role: Student</option>
+            <option value="faculty" class="bg-surface-900 text-white">Role: Academician</option>
+            <option value="industry" class="bg-surface-900 text-white">Role: Industry Recruiter</option>
+            <option value="institution" class="bg-surface-900 text-white">Role: Institution Admin</option>
+          </select>
+        </div>
+        
+        <button onclick="openApplyModal('General Registration')" class="bg-brand-500 hover:bg-brand-400 text-zinc-950 font-semibold px-4 py-2 rounded-md text-sm transition font-sans">
+          Access Portal
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative bg-surface-950 border-b border-surface-800 py-16 lg:py-24 overflow-hidden">
+    <!-- Grid overlay background -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-40"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-900 border border-surface-800 text-xs text-zinc-300 mb-6">
+          <svg class="w-3.5 h-3.5 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Unified Skill Assessment, Placement &amp; Industry Alignment
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl font-extrabold text-white uppercase tracking-tight leading-none mb-6">
+          Bridging Academic Curriculum With Industry Competencies
+        </h1>
+
+        <p class="text-lg text-zinc-400 leading-relaxed mb-8">
+          A centralized platform connecting students, faculty, universities, and industrial enterprises. Identify technical skill gaps, map career pathways, access industrial training, and streamline skill-based recruitment.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#skill-mapping" class="bg-brand-500 hover:bg-brand-400 text-zinc-950 font-bold px-6 py-3 rounded-md text-sm transition uppercase font-heading tracking-wider flex items-center gap-2">
+            Analyze Skill Gap
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </a>
+          <a href="#opportunities" class="bg-surface-850 hover:bg-surface-800 text-zinc-200 border border-surface-700 font-bold px-6 py-3 rounded-md text-sm transition uppercase font-heading tracking-wider">
+            Explore Opportunities
+          </a>
+        </div>
+      </div>
+
+      <!-- Live Core Pillars Dashboard Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-16">
+        <div class="bg-surface-900 border border-surface-800 p-5 rounded-lg">
+          <div class="text-brand-500 font-mono text-xs mb-1">MODULE 01</div>
+          <div class="font-heading text-xl text-white font-bold mb-2">Skill Mapping Engine</div>
+          <p class="text-xs text-zinc-400 leading-relaxed">Direct correlation between university syllabus and real-time job role requirements.</p>
+        </div>
+
+        <div class="bg-surface-900 border border-surface-800 p-5 rounded-lg">
+          <div class="text-brand-500 font-mono text-xs mb-1">MODULE 02</div>
+          <div class="font-heading text-xl text-white font-bold mb-2">Faculty Opportunities</div>
+          <p class="text-xs text-zinc-400 leading-relaxed">Industrial training, consultancy projects, and FDP initiatives for academicians.</p>
+        </div>
+
+        <div class="bg-surface-900 border border-surface-800 p-5 rounded-lg">
+          <div class="text-brand-500 font-mono text-xs mb-1">MODULE 03</div>
+          <div class="font-heading text-xl text-white font-bold mb-2">Verified Portfolios</div>
+          <p class="text-xs text-zinc-400 leading-relaxed">Tamper-proof digital records of certifications, live projects, and apprenticeships.</p>
+        </div>
+
+        <div class="bg-surface-900 border border-surface-800 p-5 rounded-lg">
+          <div class="text-brand-500 font-mono text-xs mb-1">MODULE 04</div>
+          <div class="font-heading text-xl text-white font-bold mb-2">Placement Analytics</div>
+          <p class="text-xs text-zinc-400 leading-relaxed">Institutional metrics tracking candidate readiness and industry hiring demands.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DYNAMIC ROLE BANNER (Changes based on selected dropdown) -->
+  <section id="roleBanner" class="bg-surface-850 border-b border-surface-800 py-4 px-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="w-2.5 h-2.5 rounded-full bg-brand-500"></span>
+        <span class="text-xs font-mono uppercase tracking-wider text-zinc-400">ACTIVE VIEW MODE:</span>
+        <span id="roleBannerText" class="text-sm font-semibold text-white">Student Dashboard &amp; Pathways</span>
+      </div>
+      <div class="text-xs text-zinc-400" id="roleBannerSubtext">
+        Showing tailored tools for student skill profiling, internship applications, and course mapping.
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-grow">
+
+    <!-- SECTION 1: INTERACTIVE SKILL ASSESSMENT & MAPPING ENGINE -->
+    <section id="skill-mapping" class="py-16 border-b border-surface-800 bg-surface-950">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+          <div>
+            <div class="text-brand-500 font-mono text-xs tracking-widest uppercase mb-1">COMPETENCY ALIGNMENT</div>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white uppercase">Interactive Skill Gap &amp; Career Pathway Engine</h2>
+          </div>
+          <p class="text-zinc-400 text-sm max-w-md mt-2 md:mt-0">
+            Select your target career pathway and mark your current competencies to identify missing skill requirements and recommended industry modules.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-surface-900 border border-surface-800 rounded-xl p-6 sm:p-8">
+          
+          <!-- Controls Panel -->
+          <div class="lg:col-span-5 space-y-6">
+            <div>
+              <label class="block text-xs font-mono uppercase text-zinc-400 mb-2">Step 1: Select Target Industry Role</label>
+              <select id="targetRoleSelect" onchange="calculateSkillGap()" class="w-full bg-surface-850 border border-surface-700 text-white rounded-md p-3 text-sm focus:border-brand-500 outline-none">
+                <option value="cloud">Full-Stack Cloud Engineer</option>
+                <option value="embedded">Embedded Systems &amp; IoT Specialist</option>
+                <option value="data">Data Engineer &amp; ML Pipeline Specialist</option>
+                <option value="vlsi">VLSI &amp; Semiconductor Design Engineer</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono uppercase text-zinc-400 mb-2">Step 2: Check Your Verified Competencies</label>
+              <div id="skillsCheckboxContainer" class="space-y-2 bg-surface-850 p-4 rounded-md border border-surface-800 max-h-60 overflow-y-auto">
+                <!-- Javascript will inject skills dynamically -->
+              </div>
+            </div>
+
+            <button onclick="calculateSkillGap()" class="w-full bg-brand-500 hover:bg-brand-400 text-zinc-950 font-bold py-3 rounded-md text-sm transition uppercase font-heading tracking-wider">
+              Recalculate Alignment Index
+            </button>
+          </div>
+
+          <!-- Analysis Output Panel -->
+          <div class="lg:col-span-7 bg-surface-950 border border-surface-800 rounded-lg p-6 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-4 border-b border-surface-800 mb-6">
+                <div>
+                  <span class="text-xs font-mono text-zinc-400 block">TARGET ROLE</span>
+                  <span id="outputRoleName" class="font-heading text-xl font-bold text-white uppercase">Full-Stack Cloud Engineer</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs font-mono text-zinc-400 block">ROLE MATCH INDEX</span>
+                  <span id="matchPercentage" class="font-heading text-3xl font-bold text-brand-400">0%</span>
+                </div>
+              </div>
+
+              <!-- Progress bar -->
+              <div class="w-full bg-surface-850 rounded-full h-2.5 mb-6 overflow-hidden">
+                <div id="matchProgressBar" class="bg-brand-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+
+              <!-- Missing Skill Gaps -->
+              <div class="mb-6">
+                <span class="text-xs font-mono uppercase text-zinc-400 block mb-3">Identified Skill Gaps (Requires Up-Skilling):</span>
+                <div id="missingSkillsList" class="flex flex-wrap gap-2">
+                  <span class="text-xs text-zinc-500">Select skills to evaluate...</span>
+                </div>
+              </div>
+
+              <!-- Recommended Action -->
+              <div>
+                <span class="text-xs font-mono uppercase text-zinc-400 block mb-2">Recommended Industry Learning Pathway:</span>
+                <div id="recommendedPathways" class="space-y-2">
+                  <!-- Javascript will populate recommended pathways -->
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-surface-800 flex justify-between items-center text-xs text-zinc-400">
+              <span>Syllabus Version: 2026 Academic Standard</span>
+              <button onclick="openApplyModal('Skill Gap Consultation')" class="text-brand-400 hover:underline font-semibold">Request Institutional Guidance &rarr;</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: OPPORTUNITIES HUB (Internships, Bids, Projects) -->
+    <section id="opportunities" class="py-16 border-b border-surface-800 bg-surface-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+          <div>
+            <div class="text-brand-500 font-mono text-xs tracking-widest uppercase mb-1">DIRECT INDUSTRY CONNECT</div>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white uppercase">Internship &amp; Project Listings</h2>
+          </div>
+          
+          <!-- Category Filter Tabs -->
+          <div class="flex items-center gap-2 mt-4 md:mt-0 overflow-x-auto pb-2 md:pb-0">
+            <button onclick="filterOpportunities('all')" class="opp-tab active bg-brand-500 text-zinc-950 font-bold px-3 py-1.5 rounded text-xs transition uppercase font-heading">All Postings</button>
+            <button onclick="filterOpportunities('internship')" class="opp-tab bg-surface-800 text-zinc-300 font-bold px-3 py-1.5 rounded text-xs transition uppercase font-heading hover:bg-surface-700">Student Internships</button>
+            <button onclick="filterOpportunities('research')" class="opp-tab bg-surface-800 text-zinc-300 font-bold px-3 py-1.5 rounded text-xs transition uppercase font-heading hover:bg-surface-700">Faculty R&amp;D</button>
+            <button onclick="filterOpportunities('consultancy')" class="opp-tab bg-surface-800 text-zinc-300 font-bold px-3 py-1.5 rounded text-xs transition uppercase font-heading hover:bg-surface-700">Industry Consultancy</button>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="mb-8">
+          <input type="text" id="oppSearchInput" onkeyup="searchOpportunities()" placeholder="Search opportunities by required skill (e.g. React, Python, Embedded, Power Systems)..." class="w-full bg-surface-950 border border-surface-800 text-white rounded-md p-3.5 text-sm outline-none focus:border-brand-500">
+        </div>
+
+        <!-- Opportunities Cards Grid -->
+        <div id="opportunitiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <!-- Card 1 -->
+          <div class="opp-card bg-surface-950 border border-surface-800 rounded-lg p-6 flex flex-col justify-between hover:border-surface-700 transition" data-category="internship" data-skills="react python node cloud PostgreSQL">
+            <div>
+              <div class="flex justify-between items-start mb-3">
+                <span class="bg-brand-500/10 text-brand-400 border border-brand-500/20 text-[11px] font-mono px-2 py-0.5 rounded uppercase">Student Internship</span>
+                <span class="text-xs text-zinc-400">Duration: 6 Months</span>
+              </div>
+              <h3 class="font-heading text-xl font-bold text-white mb-1">Full-Stack Cloud Systems Intern</h3>
+              <p class="text-xs text-brand-500 font-semibold mb-3">Sovereign Cloud Engineering Pvt Ltd</p>
+              <p class="text-xs text-zinc-400 mb-4 leading-relaxed">Work on distributed backend systems, microservice deployments, and automated testing frameworks under senior architectural guidance.</p>
+              
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                <span class="text-[10px] bg-surface-850 border border-surface-800 text-zinc-300 px-2 py-0.5 rounded">PostgreSQL</span>
+                <span class="text-[10px] bg-surface-850 border border-surface-800 text-zinc-300 px-2 py-0.5 rounded">Node.js</span>
+                <span class="text-[10px] bg-surface-850 border border-surface-800 text-zinc-300 px-2 py-0.5 rounded">Docker</span>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-surface-800 flex justify-between items-center">
+              <div>
+                <span class="text-[10px] text-zinc-400 block">STIPEND</span>
+                <span class="text-sm font-bold text-white">₹25,000 / mo</span>
+              </div>
+              <button onclick="openApplyModal('Full-Stack Cloud Systems Intern')" class="bg-surface-800 hover:bg-zinc-200 hover:text-black text-white text-xs font-bold px-3 py-2 rounded transition font-heading uppercase">
+                Apply Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="opp-card bg-surface-950 border border-surface-800 rounded-lg p-6 flex flex-col justify-between hover:border-surface-700 transition" data-category="research" data-skills="embedded vlsi microcontroller firmware iot">
+            <div>
+              <div class="flex justify-between items-start mb-3">
+                <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[11px] font-mono px-2 py-0.5 rounded uppercase">Faculty R&amp;D Grant</span>
+                <span class="text-xs text-zinc-400">Duration: 12 Months</span>
+              </div>
+              <h3 class="font-heading text-xl font-bold text-white mb-1">Industrial IoT Gateway Development</h3>
+              <p class="text-xs text-brand-500 font-semibold mb-3">Apex Automation Systems</p>
+              <p class="text-xs text-zinc-400 mb-4 leading-relaxed">Joint research grant for academic faculty to design fault-tolerant firmware for microcontrollers used in heavy manufacturing machinery.</p>
+              
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                <span class="text-[10px] bg-surface-850 border border-surface-800 text-zinc-300 px-2 py-0.5 rounded">Embedded C</span>
+                <span class="text-[10px] bg-surface-850 border border-surface-800 text-zinc-300 px-2 py-0.5 rounded">RTOS</span>
+                <span class="text-[10px] bg-surface-850 border border-surface-800 text-zinc-300 px-2 py-0.5 rounded">MODBUS</span>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-surface-800 flex justify-between items-center">
+              <div>
+                <span class="text-[10px] text-zinc-400 block">GRANT AMOUNT</span>
+                <span class="text-sm font-bold text-white">₹4,50,000</span>
+              </div>
+              <button onclick="openApplyModal('Industrial IoT Gateway Research Grant')" class="bg-surface-800 hover:bg-zinc-200 hover:text-black text-white text-xs font-bold px-3 py-2 rounded transition font-heading uppercase">
+                Submit Proposal
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="opp-card bg-surface-950 border border-surface-800 rounded-lg p-6 flex flex-col justify-between hover:border-surface-700 transition" data-category="consultancy" data-skills="power infrastructure civil CAD structural">
+            <div>
+              <div class="flex justify-between items-start mb-3">
+                <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] font-mono px-2 py-0.5 rounded uppercase">Industry Consultancy</span>
+                <span class="text-xs text-zinc-400">Duration: Milestone-based</span>
+              </div>
+              <h3 class="font-heading text-xl font-bold text-white mb-1">Structural Load Optimization Study</h3>
+              <p class="text-xs text-brand-500 font-semibold mb-3">Raghusons Infra Engineering</p>
+              <p class="text-xs text-zinc-400 mb-4 leading-relaxed">Consultancy engagement for Civil Engineering department faculty to audit dynamic stress vectors on prefab bridge components.</p>
+              
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                <span class="text-[10px] bg-surface-850 border border-surface-800 text-zinc-300 px-2 py-0.5 rounded">FEA Analysis</span>
+                <span class="text-[10px] bg-surface-850 border border-surface-800 text-zinc-300 px-2 py-0.5 rounded">STAAD Pro</span>
+                <span class="text-[10px] bg-surface-850 border border-surface-800 text-zinc-300 px-2 py-0.5 rounded">Concrete Tech</span>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-surface-800 flex justify-between items-center">
+              <div>
+                <span class="text-[10px] text-zinc-400 block">PROJECT VALUE</span>
+                <span class="text-sm font-bold text-white">₹2,80,000</span>
+              </div>
+              <button onclick="openApplyModal('Structural Load Optimization Study')" class="bg-surface-800 hover:bg-zinc-200 hover:text-black text-white text-xs font-bold px-3 py-2 rounded transition font-heading uppercase">
+                Consultancy Bid
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ACADEMICIAN & FACULTY PORTAL -->
+    <section id="academician" class="py-16 border-b border-surface-800 bg-surface-950">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-5">
+            <div class="text-brand-500 font-mono text-xs tracking-widest uppercase mb-1">FACULTY ADVANCEMENT</div>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white uppercase mb-4">Academician Opportunities &amp; Industrial Training</h2>
+            <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+              Empowering university educators through direct corporate exposure, Faculty Development Programs (FDPs), industry immersion, and joint research initiatives.
+            </p>
+
+            <ul class="space-y-3 text-sm text-zinc-300 mb-8">
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-brand-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span><strong>Industry Immersions:</strong> 2 to 4-week industrial sabbaticals at partner engineering plants.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-brand-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span><strong>Sponsored FDPs:</strong> Corporate-funded workshops on emerging technical stacks.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-brand-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span><strong>Guest Lectures &amp; Keynotes:</strong> Connect industry technical leads directly with your classroom.</span>
+              </li>
+            </ul>
+
+            <button onclick="openApplyModal('Faculty Network Registration')" class="bg-brand-500 hover:bg-brand-400 text-zinc-950 font-bold px-6 py-3 rounded-md text-sm transition uppercase font-heading tracking-wider">
+              Register as Academic Fellow
+            </button>
+          </div>
+
+          <!-- Academician Dashboard Preview Box -->
+          <div class="lg:col-span-7 bg-surface-900 border border-surface-800 rounded-xl p-6">
+            <div class="flex items-center justify-between pb-4 border-b border-surface-800 mb-4">
+              <span class="font-heading text-lg font-bold text-white uppercase">Active Faculty Development Programs (FDP)</span>
+              <span class="text-xs font-mono text-brand-400">Q3-Q4 Schedule</span>
+            </div>
+
+            <div class="space-y-3">
+              <div class="bg-surface-950 p-4 rounded border border-surface-800 flex justify-between items-center">
+                <div>
+                  <div class="text-sm font-bold text-white">Modern VLSI Fabrication &amp; Testing</div>
+                  <div class="text-xs text-zinc-400">Host: Semiconductor Research Council | 5 Days Online + 2 Days Lab</div>
+                </div>
+                <span class="text-xs bg-surface-850 text-zinc-300 border border-surface-700 px-2.5 py-1 rounded">Open</span>
+              </div>
+
+              <div class="bg-surface-950 p-4 rounded border border-surface-800 flex justify-between items-center">
+                <div>
+                  <div class="text-sm font-bold text-white">Enterprise Cloud Architecture &amp; DevOps</div>
+                  <div class="text-xs text-zinc-400">Host: Cloud Infrastructure Forum | 2 Weeks Intensive</div>
+                </div>
+                <span class="text-xs bg-surface-850 text-zinc-300 border border-surface-700 px-2.5 py-1 rounded">Open</span>
+              </div>
+
+              <div class="bg-surface-950 p-4 rounded border border-surface-800 flex justify-between items-center">
+                <div>
+                  <div class="text-sm font-bold text-white">Applied Machine Learning in Heavy Machinery</div>
+                  <div class="text-xs text-zinc-400">Host: Industrial Automation Council | On-Site Practicum</div>
+                </div>
+                <span class="text-xs bg-surface-850 text-zinc-300 border border-surface-700 px-2.5 py-1 rounded">Closing Soon</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: VERIFIED DIGITAL STUDENT PORTFOLIO SHOWCASE -->
+    <section id="portfolio" class="py-16 border-b border-surface-800 bg-surface-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <div class="text-brand-500 font-mono text-xs tracking-widest uppercase mb-1">VERIFIED STUDENT PASSPORT</div>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white uppercase">Tamper-Proof Student Digital Portfolio</h2>
+          <p class="text-zinc-400 text-sm mt-2">
+            No unverified claims. Every skill, hackathon win, and internship recorded on SkillBridge is authenticated by university faculty and industry mentors.
+          </p>
+        </div>
+
+        <!-- Sample Portfolio Card -->
+        <div class="max-w-4xl mx-auto bg-surface-950 border border-surface-800 rounded-xl p-6 sm:p-8">
+          
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-surface-800">
+            <div class="flex items-center gap-4">
+              <div class="w-14 h-14 bg-surface-850 rounded-full border border-surface-700 flex items-center justify-center font-heading text-2xl text-brand-400 font-bold">
+                PN
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-heading text-2xl font-bold text-white">PIYUSH NANDI</h3>
+                  <span class="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded">VERIFIED CANDIDATE</span>
+                </div>
+                <p class="text-xs text-zinc-400">B.Tech Computer Science &amp; Engineering | SRM Institute of Science &amp; Technology</p>
+              </div>
+            </div>
+
+            <div class="text-left sm:text-right">
+              <span class="text-xs font-mono text-zinc-400 block">PLACEMENT READINESS INDEX</span>
+              <span class="font-heading text-3xl font-bold text-brand-400">92 / 100</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-6">
+            
+            <div class="bg-surface-900 p-4 rounded border border-surface-800">
+              <div class="text-xs font-mono text-zinc-400 uppercase mb-2">Verified Skill Competencies</div>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="text-xs bg-surface-850 text-zinc-200 border border-surface-700 px-2 py-0.5 rounded">PostgreSQL</span>
+                <span class="text-xs bg-surface-850 text-zinc-200 border border-surface-700 px-2 py-0.5 rounded">Tailwind CSS</span>
+                <span class="text-xs bg-surface-850 text-zinc-200 border border-surface-700 px-2 py-0.5 rounded">Node.js</span>
+                <span class="text-xs bg-surface-850 text-zinc-200 border border-surface-700 px-2 py-0.5 rounded">System Design</span>
+              </div>
+            </div>
+
+            <div class="bg-surface-900 p-4 rounded border border-surface-800">
+              <div class="text-xs font-mono text-zinc-400 uppercase mb-2">Completed Internships</div>
+              <div class="text-xs text-white font-semibold">Infrastructure Web Portal Dev</div>
+              <div class="text-[11px] text-zinc-400">Raghusons Infra Engineering</div>
+              <div class="text-[10px] text-brand-400 mt-1 font-mono">Verified by Mentor ID: #REF-8841</div>
+            </div>
+
+            <div class="bg-surface-900 p-4 rounded border border-surface-800">
+              <div class="text-xs font-mono text-zinc-400 uppercase mb-2">Academic Record</div>
+              <div class="text-xs text-white font-semibold">CGPA: 8.9 / 10.0</div>
+              <div class="text-[11px] text-zinc-400">Capstone Project: AI Skill Mapper</div>
+              <div class="text-[10px] text-emerald-400 mt-1 font-mono">Institutional Verification: Active</div>
+            </div>
+
+          </div>
+
+          <div class="text-center pt-2">
+            <button onclick="openApplyModal('Student Portfolio Request')" class="text-xs text-zinc-400 hover:text-white underline">
+              Recruiters: Request Full Transcript &amp; Contact Credentials &rarr;
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: DASHBOARD & ANALYTICS FOR INSTITUTIONS -->
+    <section id="analytics" class="py-16 border-b border-surface-800 bg-surface-950">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+          <div>
+            <div class="text-brand-500 font-mono text-xs tracking-widest uppercase mb-1">INSTITUTIONAL INTELLIGENCE</div>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white uppercase">Placement Readiness &amp; Demand Trends</h2>
+          </div>
+          <span class="text-xs font-mono text-zinc-400 mt-2 md:mt-0">Updated Real-Time via Campus Portal</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          
+          <div class="bg-surface-900 border border-surface-800 p-6 rounded-lg">
+            <div class="text-xs font-mono text-zinc-400 uppercase mb-1">High-Demand Industry Skill</div>
+            <div class="font-heading text-2xl font-bold text-white mb-2">Cloud &amp; DevOps Engineering</div>
+            <div class="text-xs text-zinc-400 leading-relaxed mb-4">38% deficit in available graduates matching corporate cloud deployment standards.</div>
+            <div class="w-full bg-surface-850 h-2 rounded-full overflow-hidden">
+              <div class="bg-brand-500 h-2 rounded-full" style="width: 78%"></div>
+            </div>
+          </div>
+
+          <div class="bg-surface-900 border border-surface-800 p-6 rounded-lg">
+            <div class="text-xs font-mono text-zinc-400 uppercase mb-1">High-Demand Industry Skill</div>
+            <div class="font-heading text-2xl font-bold text-white mb-2">VLSI &amp; Embedded Firmware</div>
+            <div class="text-xs text-zinc-400 leading-relaxed mb-4">24% deficit in hardware description languages (Verilog/VHDL) proficiency.</div>
+            <div class="w-full bg-surface-850 h-2 rounded-full overflow-hidden">
+              <div class="bg-brand-500 h-2 rounded-full" style="width: 62%"></div>
+            </div>
+          </div>
+
+          <div class="bg-surface-900 border border-surface-800 p-6 rounded-lg">
+            <div class="text-xs font-mono text-zinc-400 uppercase mb-1">High-Demand Industry Skill</div>
+            <div class="font-heading text-2xl font-bold text-white mb-2">Data Engineering &amp; ML Ops</div>
+            <div class="text-xs text-zinc-400 leading-relaxed mb-4">42% surge in enterprise hiring requirements across manufacturing &amp; logistics.</div>
+            <div class="w-full bg-surface-850 h-2 rounded-full overflow-hidden">
+              <div class="bg-brand-500 h-2 rounded-full" style="width: 85%"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: APPLICATION / GENERAL REGISTRATION -->
+  <div id="applyModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-surface-900 border border-surface-800 rounded-xl max-w-md w-full p-6 relative">
+      <button onclick="closeModal('applyModal')" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div class="text-brand-500 font-mono text-xs uppercase mb-1">SKILLBRIDGE PORTAL SUBMISSION</div>
+      <h3 id="modalTitle" class="font-heading text-2xl font-bold text-white mb-4 uppercase">Portal Access Form</h3>
+
+      <form onsubmit="handleFormSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-mono uppercase text-zinc-400 mb-1">Full Name</label>
+          <input type="text" required placeholder="Enter full name" class="w-full bg-surface-950 border border-surface-700 text-white rounded p-2.5 text-sm outline-none focus:border-brand-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono uppercase text-zinc-400 mb-1">Email Address</label>
+          <input type="email" required placeholder="name@institution.edu or name@company.com" class="w-full bg-surface-950 border border-surface-700 text-white rounded p-2.5 text-sm outline-none focus:border-brand-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono uppercase text-zinc-400 mb-1">Primary Role</label>
+          <select class="w-full bg-surface-950 border border-surface-700 text-white rounded p-2.5 text-sm outline-none focus:border-brand-500">
+            <option>Student Candidate</option>
+            <option>Academician / Faculty Member</option>
+            <option>Industry Recruiter / Partner</option>
+            <option>Institutional Administrator</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono uppercase text-zinc-400 mb-1">Notes / Qualification Summary</label>
+          <textarea rows="3" placeholder="Specify your primary department, technical skills, or partnership requirement..." class="w-full bg-surface-950 border border-surface-700 text-white rounded p-2.5 text-sm outline-none focus:border-brand-500"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-brand-500 hover:bg-brand-400 text-zinc-950 font-bold py-3 rounded text-sm transition font-heading uppercase">
+          Submit Official Application
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: PRIVACY POLICY -->
+  <div id="privacyModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-surface-900 border border-surface-800 rounded-xl max-w-2xl w-full p-6 sm:p-8 relative max-h-[80vh] overflow-y-auto">
+      <button onclick="closeModal('privacyModal')" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <h3 class="font-heading text-2xl font-bold text-white mb-4 uppercase border-b border-surface-800 pb-2">Privacy Policy</h3>
+      
+      <div class="text-xs text-zinc-300 space-y-4 leading-relaxed">
+        <p><strong>Effective Date:</strong> September 2026</p>
+        <p>The SkillBridge Academia-Industry Collaboration Platform is committed to maintaining transparent data governance standards for all registered students, academicians, corporate partners, and institutional administrators.</p>
+        
+        <h4 class="font-bold text-white text-sm uppercase font-heading">1. Information Collection &amp; Scope</h4>
+        <p>We collect academic records, verified technical competencies, institutional email addresses, and professional contact details necessary to facilitate skill mapping, internship applications, and research collaboration.</p>
+
+        <h4 class="font-bold text-white text-sm uppercase font-heading">2. Data Utilization</h4>
+        <p>Student profiles are accessible to corporate recruiters only through explicit candidate consent or direct internship application submission. Institutional metrics are aggregated to protect individual privacy while delivering actionable skill-gap insights.</p>
+
+        <h4 class="font-bold text-white text-sm uppercase font-heading">3. Verification &amp; Security</h4>
+        <p>All certification records and portfolio credentials undergo faculty verification prior to indexing. We enforce encryption and strict access protocols across all database instances.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TERMS & CONDITIONS -->
+  <div id="termsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-surface-900 border border-surface-800 rounded-xl max-w-2xl w-full p-6 sm:p-8 relative max-h-[80vh] overflow-y-auto">
+      <button onclick="closeModal('termsModal')" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <h3 class="font-heading text-2xl font-bold text-white mb-4 uppercase border-b border-surface-800 pb-2">Terms &amp; Conditions</h3>
+      
+      <div class="text-xs text-zinc-300 space-y-4 leading-relaxed">
+        <p><strong>Effective Date:</strong> September 2026</p>
+        
+        <h4 class="font-bold text-white text-sm uppercase font-heading">1. Platform Usage &amp; Eligibility</h4>
+        <p>Access to SkillBridge is granted to enrolled students, authorized faculty members, registered corporate entities, and affiliated university coordinators. Users must provide accurate skill and credential data.</p>
+
+        <h4 class="font-bold text-white text-sm uppercase font-heading">2. Intellectual Property &amp; Research Collaborations</h4>
+        <p>Joint research grants, consultancy projects, and faculty development engagements agreed upon via SkillBridge adhere to mutual institutional Memorandum of Understanding (MoU) guidelines.</p>
+
+        <h4 class="font-bold text-white text-sm uppercase font-heading">3. Application Integrity</h4>
+        <p>Submitting false certifications or fraudulent placement claims will result in immediate profile suspension and reporting to institutional academic ethics committees.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-surface-950 border-t border-surface-800 text-xs text-zinc-500 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-6 h-6 bg-brand-500 rounded text-black flex items-center justify-center font-bold font-heading text-sm">
+              SB
+            </div>
+            <span class="font-heading text-lg font-bold text-white">SKILLBRIDGE</span>
+          </div>
+          <p class="text-zinc-400 leading-relaxed">
+            Centralized platform for skill alignment, student placement, faculty advancement, and industry collaboration.
+          </p>
+        </div>
+
+        <div>
+          <div class="font-heading text-sm font-bold text-white uppercase mb-3">Platform Navigation</div>
+          <ul class="space-y-2 text-zinc-400">
+            <li><a href="#skill-mapping" class="hover:text-white transition">Skill Gap Engine</a></li>
+            <li><a href="#opportunities" class="hover:text-white transition">Internships &amp; Grants</a></li>
+            <li><a href="#academician" class="hover:text-white transition">Faculty Development</a></li>
+            <li><a href="#portfolio" class="hover:text-white transition">Verified Student Profiles</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-heading text-sm font-bold text-white uppercase mb-3">Governance &amp; Policy</div>
+          <ul class="space-y-2 text-zinc-400">
+            <li><button onclick="openModal('privacyModal')" class="hover:text-white transition">Privacy Policy</button></li>
+            <li><button onclick="openModal('termsModal')" class="hover:text-white transition">Terms &amp; Conditions</button></li>
+            <li><a href="#analytics" class="hover:text-white transition">Institutional Dashboard</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-heading text-sm font-bold text-white uppercase mb-3">System Status</div>
+          <div class="text-zinc-400 space-y-2">
+            <p>Database: PostgreSQL (Active)</p>
+            <p>Syllabus Mapping: 2026 Academic Standard</p>
+            <p class="text-brand-400 font-mono">Status: All Systems Operational</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-surface-850 flex flex-col sm:flex-row justify-between items-center gap-4 text-zinc-500">
+        <div>&copy; 2026 SKILLBRIDGE | Academia-Industry Collaboration Platform. All Rights Reserved.</div>
+        <div class="flex gap-4">
+          <button onclick="openModal('privacyModal')" class="hover:underline">Privacy</button>
+          <button onclick="openModal('termsModal')" class="hover:underline">Terms</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+  <script>
+    // --- SKILL GAP ENGINE DATA ---
+    const roleSkillsData = {
+      cloud: {
+        title: "Full-Stack Cloud Engineer",
+        skills: [
+          { id: "s1", name: "HTML / CSS / Tailwind", defaultChecked: true },
+          { id: "s2", name: "JavaScript / Node.js", defaultChecked: true },
+          { id: "s3", name: "PostgreSQL & Database Design", defaultChecked: false },
+          { id: "s4", name: "Docker Containerization", defaultChecked: false },
+          { id: "s5", name: "CI/CD & Microservices Architecture", defaultChecked: false },
+        ],
+        pathways: [
+          "Module 101: Enterprise PostgreSQL Schema Optimization",
+          "Module 202: Docker & Kubernetes Microservice Deployment",
+          "Module 303: Scalable API Security & Auth Protocols"
+        ]
+      },
+      embedded: {
+        title: "Embedded Systems & IoT Specialist",
+        skills: [
+          { id: "s1", name: "C / C++ Fundamentals", defaultChecked: true },
+          { id: "s2", name: "Microcontroller Protocols (I2C / SPI)", defaultChecked: false },
+          { id: "s3", name: "RTOS Kernel Concepts", defaultChecked: false },
+          { id: "s4", name: "PCB Circuit Design (KiCAD)", defaultChecked: false },
+          { id: "s5", name: "Firmware Testing & Debugging", defaultChecked: true }
+        ],
+        pathways: [
+          "Module 104: Real-Time Operating Systems (RTOS) Implementation",
+          "Module 205: Low-Power Sensor Network Design"
+        ]
+      },
+      data: {
+        title: "Data Engineer & ML Pipeline Specialist",
+        skills: [
+          { id: "s1", name: "Python & Pandas", defaultChecked: true },
+          { id: "s2", name: "SQL & Data Warehousing", defaultChecked: true },
+          { id: "s3", name: "Apache Spark / Distributed Data", defaultChecked: false },
+          { id: "s4", name: "MLOps & Model Deployment", defaultChecked: false },
+          { id: "s5", name: "Data Pipeline Orchestration (Airflow)", defaultChecked: false }
+        ],
+        pathways: [
+          "Module 106: High-Throughput Data Pipeline Design",
+          "Module 207: Automated ML Model Monitoring"
+        ]
+      },
+      vlsi: {
+        title: "VLSI & Semiconductor Design Engineer",
+        skills: [
+          { id: "s1", name: "Verilog / VHDL Coding", defaultChecked: false },
+          { id: "s2", name: "Digital Logic Design", defaultChecked: true },
+          { id: "s3", name: "Static Timing Analysis (STA)", defaultChecked: false },
+          { id: "s4", name: "CMOS Analog Circuit Design", defaultChecked: false },
+          { id: "s5", name: "FPGA Prototyping", defaultChecked: false }
+        ],
+        pathways: [
+          "Module 108: RTL Synthesis & Logic Optimization",
+          "Module 209: Physical Design & Floorplanning"
+        ]
+      }
+    };
+
+    // --- RENDER SKILLS & CALCULATE GAP ---
+    function renderSkillCheckboxes() {
+      const selectedRoleKey = document.getElementById("targetRoleSelect").value;
+      const roleData = roleSkillsData[selectedRoleKey];
+      const container = document.getElementById("skillsCheckboxContainer");
+
+      container.innerHTML = "";
+      roleData.skills.forEach(skill => {
+        const label = document.createElement("label");
+        label.className = "flex items-center gap-3 text-xs text-zinc-300 hover:text-white cursor-pointer py-1";
+        label.innerHTML = `
+          <input type="checkbox" id="${skill.id}" ${skill.defaultChecked ? 'checked' : ''} onchange="calculateSkillGap()" class="w-4 h-4 rounded bg-surface-950 border-surface-700 text-brand-500 focus:ring-0 accent-yellow-500">
+          <span>${skill.name}</span>
+        `;
+        container.appendChild(label);
+      });
+
+      document.getElementById("outputRoleName").innerText = roleData.title;
+      calculateSkillGap();
+    }
+
+    function calculateSkillGap() {
+      const selectedRoleKey = document.getElementById("targetRoleSelect").value;
+      const roleData = roleSkillsData[selectedRoleKey];
+
+      // Re-render skills if role changed
+      if (document.getElementById("outputRoleName").innerText !== roleData.title) {
+        renderSkillCheckboxes();
+        return;
+      }
+
+      let totalSkills = roleData.skills.length;
+      let checkedSkillsCount = 0;
+      let missingSkills = [];
+
+      roleData.skills.forEach(skill => {
+        const checkbox = document.getElementById(skill.id);
+        if (checkbox && checkbox.checked) {
+          checkedSkillsCount++;
+        } else {
+          missingSkills.push(skill.name);
+        }
+      });
+
+      let matchPercentage = Math.round((checkedSkillsCount / totalSkills) * 100);
+
+      // UI Updates
+      document.getElementById("matchPercentage").innerText = matchPercentage + "%";
+      document.getElementById("matchProgressBar").style.width = matchPercentage + "%";
+
+      const missingSkillsList = document.getElementById("missingSkillsList");
+      missingSkillsList.innerHTML = "";
+
+      if (missingSkills.length === 0) {
+        missingSkillsList.innerHTML = `<span class="text-xs text-emerald-400 font-semibold">Skill Requirements Met for this Target Role.</span>`;
+      } else {
+        missingSkills.forEach(skillName => {
+          const badge = document.createElement("span");
+          badge.className = "text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded";
+          badge.innerText = "Missing: " + skillName;
+          missingSkillsList.appendChild(badge);
+        });
+      }
+
+      // Update Pathways
+      const recommendedPathways = document.getElementById("recommendedPathways");
+      recommendedPathways.innerHTML = "";
+      roleData.pathways.forEach(path => {
+        const p = document.createElement("div");
+        p.className = "text-xs text-zinc-300 bg-surface-900 border border-surface-800 p-2.5 rounded flex items-center gap-2";
+        p.innerHTML = `<svg class="w-4 h-4 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"/></svg> <span>${path}</span>`;
+        recommendedPathways.appendChild(p);
+      });
+    }
+
+    // --- OPPORTUNITIES SEARCH & FILTER ---
+    function filterOpportunities(category) {
+      const tabs = document.querySelectorAll(".opp-tab");
+      tabs.forEach(t => {
+        t.classList.remove("bg-brand-500", "text-zinc-950");
+        t.classList.add("bg-surface-800", "text-zinc-300");
+      });
+
+      event.target.classList.remove("bg-surface-800", "text-zinc-300");
+      event.target.classList.add("bg-brand-500", "text-zinc-950");
+
+      const cards = document.querySelectorAll(".opp-card");
+      cards.forEach(card => {
+        if (category === "all" || card.dataset.category === category) {
+          card.style.display = "flex";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    function searchOpportunities() {
+      const query = document.getElementById("oppSearchInput").value.toLowerCase();
+      const cards = document.querySelectorAll(".opp-card");
+
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        const skills = card.dataset.skills.toLowerCase();
+        if (text.includes(query) || skills.includes(query)) {
+          card.style.display = "flex";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    // --- ROLE BANNER SWITCHER ---
+    function switchRole(roleVal) {
+      const roleText = document.getElementById("roleBannerText");
+      const roleSubtext = document.getElementById("roleBannerSubtext");
+
+      if (roleVal === "student") {
+        roleText.innerText = "Student Dashboard & Skill Pathways";
+        roleSubtext.innerText = "Showing tailored tools for student skill profiling, internship applications, and course mapping.";
+      } else if (roleVal === "faculty") {
+        roleText.innerText = "Academician & Faculty Advancement View";
+        roleSubtext.innerText = "Showing FDP training schedules, industrial research grants, and consultancy bids.";
+      } else if (roleVal === "industry") {
+        roleText.innerText = "Corporate Recruiter & Industry Partner View";
+        roleSubtext.innerText = "Showing skill-based candidate shortlisting, internship posting, and research partnerships.";
+      } else if (roleVal === "institution") {
+        roleText.innerText = "Institutional Admin & Placement Cell View";
+        roleSubtext.innerText = "Showing university placement readiness indices and MoU collaboration metrics.";
+      }
+    }
+
+    // --- MODAL CONTROLS ---
+    function openModal(id) {
+      document.getElementById(id).classList.remove("hidden");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add("hidden");
+    }
+
+    function openApplyModal(titleText) {
+      document.getElementById("modalTitle").innerText = titleText;
+      openModal("applyModal");
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      alert("Application received. An institutional representative will verify your details.");
+      closeModal("applyModal");
+    }
+
+    // Initialize default state
+    window.addEventListener("DOMContentLoaded", () => {
+      renderSkillCheckboxes();
+    });
+  </script>
 </body>
-</html>
+</html>ddd
