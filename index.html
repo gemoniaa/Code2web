@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkillBridge | Academia and Industry Portal</title>
+<meta name="description" content="SkillBridge connects students, faculty, companies and institutions around skills, learning, internships and placements.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><img src="favicon.svg" alt="" width="24" height="24">SkillBridge</a>
+    <nav class="links" aria-label="Main">
+      <a href="#how">How it works</a><a href="#features">Features</a><a href="#roles">Who it is for</a><a href="#jobs">Opportunities</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Connect what you study with what employers ask for</h1>
+      <p>SkillBridge brings students, faculty, companies and institutions into one portal for skills, courses, internships and placements.</p>
+      <a class="btn" href="#jobs">See opportunity types</a><a class="btn alt" href="#roles">Who it is for</a>
+    </div>
+
+    <div class="checker">
+      <h2>Check your skill gap</h2>
+      <label class="pick" for="role">Target role</label>
+      <select id="role">
+        <option value="data">Data Analyst</option>
+        <option value="web">Web Developer</option>
+        <option value="ml">ML Engineer</option>
+      </select>
+      <div class="pick" style="font-weight:600;font-size:.92rem;margin-bottom:2px">Tick the skills you already have</div>
+      <div class="skill-list" id="skillList"></div>
+      <div class="result" id="result" aria-live="polite"></div>
+      <div class="bar" aria-hidden="true"><i id="fill"></i></div>
+      <ul class="gaps" id="gaps"></ul>
+      <p class="note">This is a self-check. Nothing you tick is saved or sent anywhere.</p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="lead">The portal follows one path from skills to a job, so each step feeds the next.</p>
+    <ol class="steps">
+      <li><h3>Assess</h3><p>Find out which technical and soft skills you have and where you fall short.</p></li>
+      <li><h3>Map</h3><p>Match your skills to job roles, industries and learning paths.</p></li>
+      <li><h3>Learn</h3><p>Take courses, workshops and training to close the gaps.</p></li>
+      <li><h3>Apply</h3><p>Apply to internships and jobs that fit the skills you have proven.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <h2>What the portal offers</h2>
+    <p class="lead">Objective: one platform that links skills, learning, opportunities and placements, so colleges and companies work together more closely.</p>
+    <div class="feat">
+      <div><h3>Skill assessment and profiling</h3><p>See your technical and soft skills and the areas to improve.</p></div>
+      <div><h3>Skill mapping</h3><p>Match current skills to job roles, industries and learning paths.</p></div>
+      <div><h3>Learning and certification</h3><p>Industry-approved courses, workshops and training.</p></div>
+      <div><h3>Internship opportunities</h3><p>Companies post internships and projects and the portal suggests suitable students.</p></div>
+      <div><h3>Placement support</h3><p>Job recommendations and simple applications based on your skills.</p></div>
+      <div><h3>Digital student portfolio</h3><p>Verified skills, certificates, projects and internships in one shareable profile.</p></div>
+      <div><h3>Academician opportunities</h3><p>Industry training, research projects and consultancy work for faculty.</p></div>
+      <div><h3>Industry and academia collaboration</h3><p>Guest lectures, mentoring and live innovation challenges.</p></div>
+      <div><h3>Dashboards and analytics</h3><p>Data on student readiness, skill growth and what industry needs.</p></div>
+      <div><h3>Role-based access</h3><p>Separate dashboards for students, teachers, colleges and companies.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="roles">
+  <div class="wrap">
+    <h2>Who it is for</h2>
+    <p class="lead">Each group gets its own set of tools.</p>
+    <div class="tabs" role="tablist" aria-label="Portal roles">
+      <button class="tab" role="tab" id="t0" aria-selected="true" aria-controls="p0">Student</button>
+      <button class="tab" role="tab" id="t1" aria-selected="false" aria-controls="p1">Academician</button>
+      <button class="tab" role="tab" id="t2" aria-selected="false" aria-controls="p2">Industry</button>
+      <button class="tab" role="tab" id="t3" aria-selected="false" aria-controls="p3">Institution</button>
+    </div>
+
+    <div class="panel on" id="p0" role="tabpanel" aria-labelledby="t0">
+      <h3>Student workspace</h3>
+      <ul><li>Take skill assessments</li><li>See gaps against target roles</li><li>Follow learning pathways</li><li>Apply to matched internships and jobs</li><li>Build a verified digital portfolio</li><li>Track application status</li></ul>
+    </div>
+    <div class="panel" id="p1" role="tabpanel" aria-labelledby="t1">
+      <h3>Academician portal</h3>
+      <ul><li>Find faculty internships</li><li>Join industrial training and FDPs</li><li>Take up consultancy projects</li><li>Start research collaborations</li><li>Host guest lectures and workshops</li><li>Mentor student projects</li></ul>
+    </div>
+    <div class="panel" id="p2" role="tabpanel" aria-labelledby="t2">
+      <h3>Industry dashboard</h3>
+      <ul><li>Post internships, jobs and apprenticeships</li><li>Get candidate recommendations</li><li>Shortlist by verified skills</li><li>Run innovation challenges</li><li>Offer mentorships and live projects</li><li>Track applications in one place</li></ul>
+    </div>
+    <div class="panel" id="p3" role="tabpanel" aria-labelledby="t3">
+      <h3>Institution analytics</h3>
+      <ul><li>Monitor skill development by department</li><li>Watch internship participation</li><li>Measure placement readiness</li><li>See skill-demand trends</li><li>Approve and verify student records</li><li>Manage documents securely</li></ul>
+    </div>
+  </div>
+</section>
+
+<section id="jobs">
+  <div class="wrap">
+    <h2>Opportunity types</h2>
+    <p class="lead">Examples of what companies can publish on the portal. These are illustrations, not live listings.</p>
+    <div class="filters" role="group" aria-label="Filter by type">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="Internship" aria-pressed="false">Internships</button>
+      <button type="button" data-f="Full-time" aria-pressed="false">Full-time</button>
+      <button type="button" data-f="Apprenticeship" aria-pressed="false">Apprenticeships</button>
+      <button type="button" data-f="Project" aria-pressed="false">Projects</button>
+    </div>
+    <div class="table">
+      <table>
+        <thead><tr><th scope="col">Role</th><th scope="col">Type</th><th scope="col">Skills asked for</th></tr></thead>
+        <tbody id="jobsBody">
+          <tr data-type="Internship"><td>Data analyst intern</td><td>Internship</td><td>SQL, Excel, statistics</td></tr>
+          <tr data-type="Full-time"><td>Frontend developer</td><td>Full-time</td><td>HTML and CSS, JavaScript, React</td></tr>
+          <tr data-type="Apprenticeship"><td>Machine learning apprentice</td><td>Apprenticeship</td><td>Python, maths, ML basics</td></tr>
+          <tr data-type="Project"><td>IoT live project</td><td>Project</td><td>Embedded C, sensors, teamwork</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><strong>SkillBridge</strong><br>Academia and industry collaboration portal</div>
+    <nav aria-label="Legal">
+      <a href="privacy.html">Privacy policy</a><a href="terms.html">Terms and conditions</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+var roles = {
+  data: [
+    ["SQL", "Practise joins and aggregates on a sample database."],
+    ["Excel", "Learn pivot tables and lookup formulas."],
+    ["Statistics", "Study descriptive statistics and hypothesis testing."],
+    ["Python", "Work through the basics of pandas."],
+    ["Communication", "Present one analysis to a small group."]
+  ],
+  web: [
+    ["HTML and CSS", "Build and style a multi-section page by hand."],
+    ["JavaScript", "Practise DOM events and fetching data."],
+    ["React", "Build a small app with components and state."],
+    ["Git", "Learn branching, commits and pull requests."],
+    ["Teamwork", "Join a group project and review each other's code."]
+  ],
+  ml: [
+    ["Python", "Practise functions, classes and NumPy."],
+    ["Maths", "Revise linear algebra, probability and calculus."],
+    ["ML basics", "Train and evaluate a simple model."],
+    ["Data handling", "Clean and explore a real dataset."],
+    ["Communication", "Explain a model's results in plain language."]
+  ]
+};
+
+var roleSel = document.getElementById("role");
+var listEl = document.getElementById("skillList");
+var resultEl = document.getElementById("result");
+var fillEl = document.getElementById("fill");
+var gapsEl = document.getElementById("gaps");
+
+function renderSkills() {
+  var skills = roles[roleSel.value];
+  listEl.textContent = "";
+  skills.forEach(function (s, i) {
+    var label = document.createElement("label");
+    var box = document.createElement("input");
+    box.type = "checkbox";
+    box.value = i;
+    box.addEventListener("change", update);
+    label.appendChild(box);
+    label.appendChild(document.createTextNode(s[0]));
+    listEl.appendChild(label);
+  });
+  update();
+}
+
+function update() {
+  var skills = roles[roleSel.value];
+  var boxes = listEl.querySelectorAll("input");
+  var have = 0;
+  gapsEl.textContent = "";
+  boxes.forEach(function (b, i) {
+    if (b.checked) {
+      have++;
+    } else {
+      var li = document.createElement("li");
+      var name = document.createElement("b");
+      name.textContent = skills[i][0];
+      li.appendChild(name);
+      li.appendChild(document.createTextNode(": " + skills[i][1]));
+      gapsEl.appendChild(li);
+    }
+  });
+  resultEl.textContent = "You have " + have + " of " + skills.length + " skills for this role.";
+  fillEl.style.width = Math.round(have / skills.length * 100) + "%";
+}
+
+roleSel.addEventListener("change", renderSkills);
+renderSkills();
+
+var tabs = document.querySelectorAll(".tab");
+tabs.forEach(function (t) {
+  t.addEventListener("click", function () {
+    tabs.forEach(function (x) { x.setAttribute("aria-selected", "false"); });
+    document.querySelectorAll(".panel").forEach(function (p) { p.classList.remove("on"); });
+    t.setAttribute("aria-selected", "true");
+    document.getElementById(t.getAttribute("aria-controls")).classList.add("on");
+  });
+});
+
+var filterBtns = document.querySelectorAll(".filters button");
+filterBtns.forEach(function (b) {
+  b.addEventListener("click", function () {
+    filterBtns.forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+    b.setAttribute("aria-pressed", "true");
+    var f = b.getAttribute("data-f");
+    document.querySelectorAll("#jobsBody tr").forEach(function (row) {
+      row.style.display = (f === "all" || row.getAttribute("data-type") === f) ? "" : "none";
+    });
+  });
+});
+</script>
+</body>
+</html>
