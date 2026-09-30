@@ -3,22 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SkillBridge | Academia and Industry Portal</title>
-<meta name="description" content="SkillBridge connects students, faculty, companies and institutions around skills, learning, internships and placements.">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>SkillBridge – Academia–Industry Collaboration Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<style>
+:root{
+  --paper:#F3F6FB; --ink:#12233D; --muted:#5B6B82; --line:#D5DEEA;
+  --teal:#0E8F86; --teal-soft:#DDF3F1; --amber:#F2A33A; --coral:#D9534F; --white:#fff;
+  --head:'Bricolage Grotesque','Trebuchet MS',sans-serif;
+  --body:'Source Sans 3','Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.6;font-size:17px}
+h1,h2,h3{font-family:var(--head);line-height:1.15;letter-spacing:-.02em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:64px 0}
+h2{font-size:clamp(1.7rem,4vw,2.4rem);margin-bottom:10px}
+.lead{color:var(--muted);max-width:60ch;margin-bottom:32px}
+
+/* nav */
+header{position:sticky;top:0;z-index:10;background:rgba(243,246,251,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:var(--head);font-weight:800;font-size:1.25rem;text-decoration:none}
+.logo span{color:var(--teal)}
+nav .links a{margin-left:18px;text-decoration:none;font-weight:600;font-size:.95rem;color:var(--muted)}
+nav .links a:hover{color:var(--ink)}
+.user-profile{display:none;align-items:center;gap:10px;font-weight:600;font-size:.95rem}
+.avatar{width:32px;height:32px;background:var(--teal);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--head)}
+.btn{display:inline-block;background:var(--ink);color:var(--white);padding:12px 22px;border-radius:8px;font-weight:600;text-decoration:none;border:0;cursor:pointer;font-size:1rem;font-family:var(--body);transition:background 0.2s}
+.btn:hover{background:var(--teal)}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.btn.alt:hover{background:var(--ink);color:var(--white)}
+
+/* hero */
+.hero{padding:56px 0 40px}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(2.2rem,6vw,3.6rem);margin-bottom:16px}
+.hero p{color:var(--muted);font-size:1.12rem;margin-bottom:24px;max-width:46ch}
+.hero .btn{margin-right:10px;margin-bottom:10px}
+
+/* skill gap card */
+.gap{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 12px 30px rgba(18,35,61,.08);position:relative}
+.gap-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.gap-top strong{font-family:var(--head);font-size:1.05rem}
+select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);cursor:pointer}
+.skill{margin-bottom:14px}
+.skill-row{display:flex;justify-content:space-between;font-size:.92rem;font-weight:600;margin-bottom:5px}
+.track{position:relative;height:12px;background:var(--paper);border-radius:6px}
+.have{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--teal);transition:width .5s ease-out}
+.need{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--ink);border-radius:2px;transition:left .5s ease-out}
+.have.low{background:var(--coral)}
+.legend{display:flex;gap:16px;font-size:.82rem;color:var(--muted);margin-top:8px;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.gap-foot{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:.95rem;display:flex;justify-content:space-between;align-items:center}
+.gap-foot b{color:var(--teal)}
+
+/* pathway */
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--white)}
+.step{padding:24px 20px;border-right:1px solid var(--line);position:relative}
+.step:last-child{border-right:0}
+.step h3{font-size:1.2rem;margin-bottom:6px}
+.step p{color:var(--muted);font-size:.95rem}
+.step:not(:last-child)::after{content:"→";position:absolute;right:-11px;top:24px;background:var(--amber);color:var(--ink);width:22px;height:22px;border-radius:50%;text-align:center;line-height:22px;font-size:.85rem;z-index:1}
+
+/* features */
+.feat{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px}
+.feat div{padding:16px 0 16px 16px;border-left:4px solid var(--teal);margin-bottom:14px}
+.feat div:nth-child(4n+3),.feat div:nth-child(4n+4){border-left-color:var(--amber)}
+.feat h3{font-size:1.05rem;margin-bottom:2px}
+.feat p{color:var(--muted);font-size:.95rem}
+
+/* roles */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:var(--white);font:600 .95rem var(--body);cursor:pointer;color:var(--muted)}
+.tab:hover{border-color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.panel{display:none;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:26px}
+.panel.on{display:block;animation:fadeIn 0.3s}
+.panel h3{font-size:1.4rem;margin-bottom:12px}
+.panel ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 30px;margin-bottom:20px}
+.panel li{padding-left:22px;position:relative}
+.panel li::before{content:"";position:absolute;left:0;top:.6em;width:10px;height:10px;border-radius:3px;background:var(--teal)}
+.action-btns{display:flex;gap:10px;margin-top:10px;border-top:1px solid var(--line);padding-top:20px}
+
+/* opportunities */
+.filter-bar{margin-bottom:16px;display:flex;gap:10px}
+.table{background:var(--white);border:1px solid var(--line);border-radius:14px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line)}
+th{font-family:var(--head);font-size:.95rem;color:var(--muted);font-weight:700}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;padding:3px 12px;border-radius:999px;font-weight:700;font-size:.85rem;background:var(--teal-soft);color:#0A6B64}
+.pill.mid{background:#FCEBCF;color:#8A5A0B}
+.small-btn{padding:6px 14px;border-radius:6px;border:1.5px solid var(--ink);background:transparent;font:600 .85rem var(--body);cursor:pointer;transition:all 0.2s}
+.small-btn:hover{background:var(--ink);color:var(--white)}
+.small-btn.done{background:var(--teal);border-color:var(--teal);color:var(--white)}
+.small-btn.outline{border-color:var(--line);color:var(--muted)}
+.small-btn.outline.active{background:var(--ink);border-color:var(--ink);color:var(--white)}
+
+/* analytics */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+.stat{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px}
+.stat b{font-family:var(--head);font-size:2rem;display:block;transition:all 1s}
+.stat span{color:var(--muted);font-size:.92rem}
+.chart{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:24px}
+.chart h3{font-size:1.1rem;margin-bottom:16px}
+.bar{display:grid;grid-template-columns:110px 1fr 44px;gap:12px;align-items:center;margin-bottom:12px;font-size:.92rem;font-weight:600}
+.bar div{height:16px;background:var(--paper);border-radius:8px;overflow:hidden}
+.bar div i{display:block;height:100%;background:var(--amber);border-radius:8px;width:0;transition:width 1s ease-out}
+
+footer{background:var(--ink);color:#C9D4E5;padding:36px 0;text-align:center;font-size:.92rem}
+footer b{color:var(--white)}
+
+/* Modals & Toasts */
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(18,35,61,0.6);backdrop-filter:blur(4px);z-index:99;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s}
+.overlay.show{display:flex;opacity:1}
+.modal{background:var(--white);border-radius:16px;padding:32px;width:90%;max-width:500px;box-shadow:0 20px 40px rgba(0,0,0,0.2);transform:translateY(20px);transition:transform 0.3s}
+.overlay.show .modal{transform:translateY(0)}
+.modal h3{margin-bottom:16px;font-size:1.5rem}
+.modal p{color:var(--muted);margin-bottom:24px}
+.modal-close{float:right;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);line-height:1}
+.course-card{border:1px solid var(--line);padding:12px;border-radius:8px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.course-card b{display:block;font-size:.95rem}
+.course-card span{font-size:.85rem;color:var(--muted)}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--ink);color:var(--white);padding:14px 24px;border-radius:8px;box-shadow:0 10px 20px rgba(0,0,0,0.1);z-index:100;transform:translateY(100px);opacity:0;transition:all 0.3s}
+.toast.show{transform:translateY(0);opacity:1}
+.portfolio-header{display:flex;gap:16px;align-items:center;margin-bottom:24px}
+.portfolio-header .avatar{width:64px;height:64px;font-size:24px}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:820px){
+  .hero-grid,.feat,.panel ul{grid-template-columns:1fr}
+  .path{grid-template-columns:1fr 1fr}
+  .step:nth-child(2){border-right:0}
+  .step:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .step::after{display:none}
+  .stats{grid-template-columns:1fr}
+  nav .links{display:none}
+  section{padding:48px 0}
+  .gap-foot{flex-direction:column;align-items:flex-start;gap:12px}
+}
+</style>
 </head>
 <body>
 
 <header>
   <div class="wrap nav">
-    <a class="logo" href="#top"><img src="favicon.svg" alt="" width="24" height="24">SkillBridge</a>
-    <nav class="links" aria-label="Main">
-      <a href="#how">How it works</a><a href="#features">Features</a><a href="#roles">Who it is for</a><a href="#jobs">Opportunities</a>
+    <a class="logo" href="#top">Skill<span>Bridge</span></a>
+    <nav>
+      <div class="links">
+        <a href="#pathway">Pathway</a><a href="#features">Features</a><a href="#roles">Dashboard</a><a href="#jobs">Opportunities</a>
+      </div>
     </nav>
+    <button class="btn" id="loginBtn">Log in</button>
+    <div class="user-profile" id="userProfile">
+      <div class="avatar">P</div>
+      <span>Piyush</span>
+      <button class="small-btn outline" id="logoutBtn" style="margin-left:10px">Exit</button>
+    </div>
   </div>
 </header>
 
@@ -26,218 +171,366 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <h1>Connect what you study with what employers ask for</h1>
-      <p>SkillBridge brings students, faculty, companies and institutions into one portal for skills, courses, internships and placements.</p>
-      <a class="btn" href="#jobs">See opportunity types</a><a class="btn alt" href="#roles">Who it is for</a>
+      <h1>Close the gap between what you learn and what industry hires for.</h1>
+      <p>One portal where students, faculty, companies and institutions find skills, courses, internships and placements.</p>
+      <a class="btn" href="#jobs">Find internships</a><a class="btn alt" href="#roles">Explore roles</a>
     </div>
-
-    <div class="checker">
-      <h2>Check your skill gap</h2>
-      <label class="pick" for="role">Target role</label>
-      <select id="role">
-        <option value="data">Data Analyst</option>
-        <option value="web">Web Developer</option>
-        <option value="ml">ML Engineer</option>
-      </select>
-      <div class="pick" style="font-weight:600;font-size:.92rem;margin-bottom:2px">Tick the skills you already have</div>
-      <div class="skill-list" id="skillList"></div>
-      <div class="result" id="result" aria-live="polite"></div>
-      <div class="bar" aria-hidden="true"><i id="fill"></i></div>
-      <ul class="gaps" id="gaps"></ul>
-      <p class="note">This is a self-check. Nothing you tick is saved or sent anywhere.</p>
+    <div class="gap" aria-live="polite">
+      <div class="gap-top">
+        <strong>Your skill gap</strong>
+        <label><span style="position:absolute;left:-9999px">Target role</span>
+          <select id="role">
+            <option value="data">Data Analyst</option>
+            <option value="web">Web Developer</option>
+            <option value="ai">ML Engineer</option>
+          </select>
+        </label>
+      </div>
+      <div id="skills"></div>
+      <div class="legend"><span><i style="background:var(--teal)"></i>Your level</span><span><i style="background:var(--coral)"></i>Below target</span><span><i style="background:var(--ink)"></i>Role needs</span></div>
+      <div class="gap-foot">
+        <span id="gapfoot"></span>
+        <button class="small-btn" id="viewCoursesBtn">View Courses</button>
+      </div>
     </div>
-  </div>
-</section>
-
-<section id="how">
-  <div class="wrap">
-    <h2>How it works</h2>
-    <p class="lead">The portal follows one path from skills to a job, so each step feeds the next.</p>
-    <ol class="steps">
-      <li><h3>Assess</h3><p>Find out which technical and soft skills you have and where you fall short.</p></li>
-      <li><h3>Map</h3><p>Match your skills to job roles, industries and learning paths.</p></li>
-      <li><h3>Learn</h3><p>Take courses, workshops and training to close the gaps.</p></li>
-      <li><h3>Apply</h3><p>Apply to internships and jobs that fit the skills you have proven.</p></li>
-    </ol>
   </div>
 </section>
 
 <section id="features">
   <div class="wrap">
-    <h2>What the portal offers</h2>
-    <p class="lead">Objective: one platform that links skills, learning, opportunities and placements, so colleges and companies work together more closely.</p>
+    <h2>What the portal does</h2>
+    <p class="lead"><strong>Objective:</strong> Build a unified platform that connects skills → learning → opportunities → placements, creating stronger collaboration between academia and industry.</p>
     <div class="feat">
-      <div><h3>Skill assessment and profiling</h3><p>See your technical and soft skills and the areas to improve.</p></div>
-      <div><h3>Skill mapping</h3><p>Match current skills to job roles, industries and learning paths.</p></div>
-      <div><h3>Learning and certification</h3><p>Industry-approved courses, workshops and training.</p></div>
-      <div><h3>Internship opportunities</h3><p>Companies post internships and projects and the portal suggests suitable students.</p></div>
-      <div><h3>Placement support</h3><p>Job recommendations and simple applications based on your skills.</p></div>
-      <div><h3>Digital student portfolio</h3><p>Verified skills, certificates, projects and internships in one shareable profile.</p></div>
-      <div><h3>Academician opportunities</h3><p>Industry training, research projects and consultancy work for faculty.</p></div>
-      <div><h3>Industry and academia collaboration</h3><p>Guest lectures, mentoring and live innovation challenges.</p></div>
-      <div><h3>Dashboards and analytics</h3><p>Data on student readiness, skill growth and what industry needs.</p></div>
-      <div><h3>Role-based access</h3><p>Separate dashboards for students, teachers, colleges and companies.</p></div>
+      <div><h3>Skill Assessment & Profiling</h3><p>Find out what technical and soft skills you have, and see exactly where you need to improve.</p></div>
+      <div><h3>Skill Mapping</h3><p>Match your current skills directly to the right job roles, industries, and learning paths.</p></div>
+      <div><h3>Learning & Certification</h3><p>Take industry-approved courses, workshops, and training to build the skills you are missing.</p></div>
+      <div><h3>Internship Opportunities</h3><p>Companies post internships and projects, and the portal matches them with the right students.</p></div>
+      <div><h3>Placement Support</h3><p>Get job recommendations, apply easily, and get hired based on your actual skills.</p></div>
+      <div><h3>Digital Student Portfolio</h3><p>Keep all your verified skills, certificates, projects, and internships in one easy-to-share digital profile.</p></div>
+      <div><h3>Academician Opportunities</h3><p>Help teachers find industry training, research projects, and consultancy work.</p></div>
+      <div><h3>Industry–Academia Collaboration</h3><p>Bring colleges and companies together for guest lectures, mentoring, and live innovation challenges.</p></div>
+      <div><h3>Dashboards & Analytics</h3><p>Give colleges and companies clear data to track student readiness, skill growth, and what the industry needs.</p></div>
+      <div><h3>Role-Based Access</h3><p>Secure, separate dashboards with special tools just for students, teachers, colleges, and companies.</p></div>
     </div>
   </div>
 </section>
 
 <section id="roles">
   <div class="wrap">
-    <h2>Who it is for</h2>
-    <p class="lead">Each group gets its own set of tools.</p>
-    <div class="tabs" role="tablist" aria-label="Portal roles">
-      <button class="tab" role="tab" id="t0" aria-selected="true" aria-controls="p0">Student</button>
-      <button class="tab" role="tab" id="t1" aria-selected="false" aria-controls="p1">Academician</button>
-      <button class="tab" role="tab" id="t2" aria-selected="false" aria-controls="p2">Industry</button>
-      <button class="tab" role="tab" id="t3" aria-selected="false" aria-controls="p3">Institution</button>
+    <h2>Interactive Dashboards</h2>
+    <p class="lead">Role-based access provides specific tools. Try the interactive features below.</p>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-p="p0">Student</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="p1">Academician</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="p2">Industry</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="p3">Institution</button>
     </div>
-
-    <div class="panel on" id="p0" role="tabpanel" aria-labelledby="t0">
-      <h3>Student workspace</h3>
+    
+    <div class="panel on" id="p0">
+      <h3>Student Workspace</h3>
       <ul><li>Take skill assessments</li><li>See gaps against target roles</li><li>Follow learning pathways</li><li>Apply to matched internships and jobs</li><li>Build a verified digital portfolio</li><li>Track application status</li></ul>
+      <div class="action-btns">
+        <button class="btn" onclick="takeAssessment()">Take Skill Assessment</button>
+        <button class="btn alt" onclick="showPortfolio()">Generate Portfolio</button>
+      </div>
     </div>
-    <div class="panel" id="p1" role="tabpanel" aria-labelledby="t1">
-      <h3>Academician portal</h3>
+    
+    <div class="panel" id="p1">
+      <h3>Academician Portal</h3>
       <ul><li>Find faculty internships</li><li>Join industrial training and FDPs</li><li>Take up consultancy projects</li><li>Start research collaborations</li><li>Host guest lectures and workshops</li><li>Mentor student projects</li></ul>
+      <div class="action-btns">
+        <button class="btn" onclick="showToast('Research collaboration request sent to network.')">Find Collaborations</button>
+      </div>
     </div>
-    <div class="panel" id="p2" role="tabpanel" aria-labelledby="t2">
-      <h3>Industry dashboard</h3>
+    
+    <div class="panel" id="p2">
+      <h3>Industry Dashboard</h3>
       <ul><li>Post internships, jobs and apprenticeships</li><li>Get candidate recommendations</li><li>Shortlist by verified skills</li><li>Run innovation challenges</li><li>Offer mentorships and live projects</li><li>Track applications in one place</li></ul>
+      <div class="action-btns">
+        <button class="btn" onclick="showToast('New Internship role published successfully.')">Post Opportunity</button>
+        <button class="btn alt" onclick="showToast('Loaded 14 student recommendations.')">View Candidates</button>
+      </div>
     </div>
-    <div class="panel" id="p3" role="tabpanel" aria-labelledby="t3">
-      <h3>Institution analytics</h3>
+    
+    <div class="panel" id="p3">
+      <h3>Institution Analytics</h3>
       <ul><li>Monitor skill development by department</li><li>Watch internship participation</li><li>Measure placement readiness</li><li>See skill-demand trends</li><li>Approve and verify student records</li><li>Manage documents securely</li></ul>
+      <div class="action-btns">
+        <button class="btn" onclick="document.getElementById('analytics').scrollIntoView()">View Analytics Report</button>
+      </div>
     </div>
   </div>
 </section>
 
 <section id="jobs">
   <div class="wrap">
-    <h2>Opportunity types</h2>
-    <p class="lead">Examples of what companies can publish on the portal. These are illustrations, not live listings.</p>
-    <div class="filters" role="group" aria-label="Filter by type">
-      <button type="button" data-f="all" aria-pressed="true">All</button>
-      <button type="button" data-f="Internship" aria-pressed="false">Internships</button>
-      <button type="button" data-f="Full-time" aria-pressed="false">Full-time</button>
-      <button type="button" data-f="Apprenticeship" aria-pressed="false">Apprenticeships</button>
-      <button type="button" data-f="Project" aria-pressed="false">Projects</button>
+    <h2>Matched opportunities</h2>
+    <p class="lead">Match scores compare your verified skills with what each post needs.</p>
+    <div class="filter-bar">
+      <button class="small-btn outline active" onclick="filterJobs('all', this)">All</button>
+      <button class="small-btn outline" onclick="filterJobs('Internship', this)">Internships</button>
+      <button class="small-btn outline" onclick="filterJobs('Full-time', this)">Full-time</button>
     </div>
     <div class="table">
       <table>
-        <thead><tr><th scope="col">Role</th><th scope="col">Type</th><th scope="col">Skills asked for</th></tr></thead>
+        <thead><tr><th>Role</th><th>Company</th><th>Type</th><th>Match</th><th>Action</th></tr></thead>
         <tbody id="jobsBody">
-          <tr data-type="Internship"><td>Data analyst intern</td><td>Internship</td><td>SQL, Excel, statistics</td></tr>
-          <tr data-type="Full-time"><td>Frontend developer</td><td>Full-time</td><td>HTML and CSS, JavaScript, React</td></tr>
-          <tr data-type="Apprenticeship"><td>Machine learning apprentice</td><td>Apprenticeship</td><td>Python, maths, ML basics</td></tr>
-          <tr data-type="Project"><td>IoT live project</td><td>Project</td><td>Embedded C, sensors, teamwork</td></tr>
+          <tr data-type="Internship"><td>Data Analyst Intern</td><td>Nilgiri Analytics</td><td>Internship</td><td><span class="pill">92%</span></td><td><button class="small-btn apply-btn">Apply</button></td></tr>
+          <tr data-type="Full-time"><td>Frontend Developer</td><td>Marina Labs</td><td>Full-time</td><td><span class="pill">85%</span></td><td><button class="small-btn apply-btn">Apply</button></td></tr>
+          <tr data-type="Apprenticeship"><td>ML Apprentice</td><td>Kaveri AI</td><td>Apprenticeship</td><td><span class="pill mid">68%</span></td><td><button class="small-btn apply-btn">Apply</button></td></tr>
+          <tr data-type="Project"><td>IoT Live Project</td><td>Coromandel Systems</td><td>Project</td><td><span class="pill mid">61%</span></td><td><button class="small-btn apply-btn">Apply</button></td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
+
+<section id="analytics">
+  <div class="wrap">
+    <h2>Skill-Demand Analytics</h2>
+    <p class="lead">Live data view for institutions and industry partners.</p>
+    <div class="stats">
+      <div class="stat"><b id="counter1">0</b><span>Students Assessed</span></div>
+      <div class="stat"><b id="counter2">0</b><span>Partner Companies</span></div>
+      <div class="stat"><b id="counter3">0%</b><span>Placement Readiness</span></div>
+    </div>
+    <div class="chart" id="chartView">
+      <h3>Skills most in demand this quarter</h3>
+      <div class="bar">Python<div><i data-w="88%"></i></div>88%</div>
+      <div class="bar">Data analysis<div><i data-w="76%"></i></div>76%</div>
+      <div class="bar">Communication<div><i data-w="71%"></i></div>71%</div>
+      <div class="bar">Cloud basics<div><i data-w="58%"></i></div>58%</div>
+      <div class="bar">Teamwork<div><i data-w="52%"></i></div>52%</div>
+    </div>
+  </div>
+</section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <div><strong>SkillBridge</strong><br>Academia and industry collaboration portal</div>
-    <nav aria-label="Legal">
-      <a href="privacy.html">Privacy policy</a><a href="terms.html">Terms and conditions</a>
-    </nav>
-  </div>
-</footer>
+<footer><div class="wrap"><b>SkillBridge</b> – skills → learning → opportunities → placements.<br>Interactive Hackathon Prototype</div></footer>
+
+<!-- Modals -->
+<div class="overlay" id="modalOverlay">
+  <!-- Dynamic Modal Content Box -->
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<div class="toast" id="toastMsg">Action successful!</div>
 
 <script>
-var roles = {
-  data: [
-    ["SQL", "Practise joins and aggregates on a sample database."],
-    ["Excel", "Learn pivot tables and lookup formulas."],
-    ["Statistics", "Study descriptive statistics and hypothesis testing."],
-    ["Python", "Work through the basics of pandas."],
-    ["Communication", "Present one analysis to a small group."]
-  ],
-  web: [
-    ["HTML and CSS", "Build and style a multi-section page by hand."],
-    ["JavaScript", "Practise DOM events and fetching data."],
-    ["React", "Build a small app with components and state."],
-    ["Git", "Learn branching, commits and pull requests."],
-    ["Teamwork", "Join a group project and review each other's code."]
-  ],
-  ml: [
-    ["Python", "Practise functions, classes and NumPy."],
-    ["Maths", "Revise linear algebra, probability and calculus."],
-    ["ML basics", "Train and evaluate a simple model."],
-    ["Data handling", "Clean and explore a real dataset."],
-    ["Communication", "Explain a model's results in plain language."]
-  ]
+// --- Data State ---
+let rolesData = {
+  data: [["SQL", 70, 80], ["Excel", 85, 75], ["Statistics", 50, 75], ["Communication", 65, 70]],
+  web: [["HTML / CSS", 80, 85], ["JavaScript", 55, 80], ["React", 35, 70], ["Teamwork", 75, 65]],
+  ai: [["Python", 75, 85], ["Maths", 55, 80], ["ML basics", 40, 75], ["Communication", 60, 60]]
 };
+let currentGaps = []; // Store current gaps to recommend courses
 
-var roleSel = document.getElementById("role");
-var listEl = document.getElementById("skillList");
-var resultEl = document.getElementById("result");
-var fillEl = document.getElementById("fill");
-var gapsEl = document.getElementById("gaps");
+// --- Core Functions ---
+function drawSkills() {
+  const list = rolesData[document.getElementById('role').value];
+  let gaps = 0;
+  let html = '';
+  currentGaps = []; // Reset gaps
 
-function renderSkills() {
-  var skills = roles[roleSel.value];
-  listEl.textContent = "";
-  skills.forEach(function (s, i) {
-    var label = document.createElement("label");
-    var box = document.createElement("input");
-    box.type = "checkbox";
-    box.value = i;
-    box.addEventListener("change", update);
-    label.appendChild(box);
-    label.appendChild(document.createTextNode(s[0]));
-    listEl.appendChild(label);
+  list.forEach(([n, h, r]) => {
+    const low = h < r; 
+    if(low) {
+      gaps++;
+      currentGaps.push({skill: n, have: h, need: r}); // Save for course generator
+    }
+    html += `<div class="skill"><div class="skill-row"><span>${n}</span><span>${h}% / ${r}%</span></div>
+    <div class="track"><div class="have ${low ? 'low' : ''}" style="width:${h}%"></div><div class="need" style="left:${r}%"></div></div></div>`;
   });
-  update();
+  
+  document.getElementById('skills').innerHTML = html;
+  const match = Math.round(list.reduce((a, [, h, r]) => a + Math.min(h, r) / r, 0) / list.length * 100);
+  document.getElementById('gapfoot').innerHTML = `Role match: <b>${match}%</b>. ${gaps} skill${gaps === 1 ? '' : 's'} below target.`;
+  
+  const courseBtn = document.getElementById('viewCoursesBtn');
+  if(gaps > 0) {
+    courseBtn.style.display = 'inline-block';
+  } else {
+    courseBtn.style.display = 'none';
+  }
 }
 
-function update() {
-  var skills = roles[roleSel.value];
-  var boxes = listEl.querySelectorAll("input");
-  var have = 0;
-  gapsEl.textContent = "";
-  boxes.forEach(function (b, i) {
-    if (b.checked) {
-      have++;
-    } else {
-      var li = document.createElement("li");
-      var name = document.createElement("b");
-      name.textContent = skills[i][0];
-      li.appendChild(name);
-      li.appendChild(document.createTextNode(": " + skills[i][1]));
-      gapsEl.appendChild(li);
+document.getElementById('role').addEventListener('change', drawSkills);
+drawSkills(); // Init
+
+// --- Tab Switching ---
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-selected', 'false'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  t.setAttribute('aria-selected', 'true');
+  document.getElementById(t.dataset.p).classList.add('on');
+}));
+
+// --- Job Filtering & Applying ---
+function filterJobs(type, btnNode) {
+  document.querySelectorAll('.filter-bar .small-btn').forEach(b => b.classList.remove('active'));
+  btnNode.classList.add('active');
+  
+  const rows = document.querySelectorAll('#jobsBody tr');
+  rows.forEach(row => {
+    if(type === 'all' || row.dataset.type === type) row.style.display = '';
+    else row.style.display = 'none';
+  });
+}
+
+document.querySelectorAll('.apply-btn').forEach(b => b.addEventListener('click', (e) => {
+  const btn = e.target;
+  if(btn.classList.contains('done')) return;
+  btn.textContent = 'Applied';
+  btn.classList.add('done');
+  showToast('Application submitted successfully!');
+}));
+
+// --- Authentication Simulation ---
+const loginBtn = document.getElementById('loginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const userProfile = document.getElementById('userProfile');
+
+loginBtn.addEventListener('click', () => {
+  loginBtn.style.display = 'none';
+  userProfile.style.display = 'flex';
+  showToast('Logged in as Piyush (Student)');
+  
+  // Auto-switch to student tab
+  document.querySelector('.tab[data-p="p0"]').click();
+});
+
+logoutBtn.addEventListener('click', () => {
+  loginBtn.style.display = 'inline-block';
+  userProfile.style.display = 'none';
+  showToast('Logged out successfully.');
+});
+
+// --- Modal System ---
+const modalOverlay = document.getElementById('modalOverlay');
+const modalContent = document.getElementById('modalContent');
+
+function openModal(htmlContent) {
+  modalContent.innerHTML = `<button class="modal-close" onclick="closeModal()">&times;</button>` + htmlContent;
+  modalOverlay.classList.add('show');
+}
+
+function closeModal() {
+  modalOverlay.classList.remove('show');
+}
+
+// Close modal on outside click
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target === modalOverlay) closeModal();
+});
+
+// --- Specific Features ---
+
+// 1. Recommended Courses
+document.getElementById('viewCoursesBtn').addEventListener('click', () => {
+  let html = `<h3>Recommended Learning Path</h3><p>Based on your skill gap analysis.</p>`;
+  if(currentGaps.length === 0) {
+    html += `<p>You meet all requirements! Consider advanced projects.</p>`;
+  } else {
+    currentGaps.forEach(g => {
+      html += `
+      <div class="course-card">
+        <div>
+          <b>${g.skill} Mastery Bootcamp</b>
+          <span>Boost your skill from ${g.have}% to 90%</span>
+        </div>
+        <button class="small-btn outline" onclick="this.textContent='Enrolled'; this.classList.add('done'); showToast('Enrolled in ${g.skill} course!')">Enroll</button>
+      </div>`;
+    });
+  }
+  openModal(html);
+});
+
+// 2. Skill Assessment
+function takeAssessment() {
+  openModal(`
+    <h3>Skill Assessment</h3>
+    <p>Simulating an AI-driven technical test...</p>
+    <div style="height:8px; background:var(--paper); border-radius:4px; overflow:hidden; margin-bottom:20px;">
+      <div id="progress" style="width:0%; height:100%; background:var(--teal); transition:width 2s;"></div>
+    </div>
+    <p id="assessmentStatus" style="font-size:0.9rem; font-weight:600;">Analyzing results...</p>
+  `);
+  
+  setTimeout(() => document.getElementById('progress').style.width = '100%', 100);
+  
+  setTimeout(() => {
+    document.getElementById('assessmentStatus').innerHTML = "<span style='color:var(--teal)'>Assessment Complete! +10% to technical skills.</span>";
+    // Simulate skill boost
+    const currentRole = document.getElementById('role').value;
+    rolesData[currentRole][0][1] += 10; // boost first skill
+    if(rolesData[currentRole][0][1] > 100) rolesData[currentRole][0][1] = 100;
+    drawSkills(); // redraw
+    showToast('Skills updated in your profile');
+    setTimeout(closeModal, 2000);
+  }, 2000);
+}
+
+// 3. Digital Portfolio
+function showPortfolio() {
+  openModal(`
+    <div class="portfolio-header">
+      <div class="avatar">P</div>
+      <div>
+        <h3 style="margin:0">Piyush Nandi</h3>
+        <p style="margin:0; font-size:0.9rem;">B.Tech Engineering • SRM Institute of Science and Technology, Ramapuram</p>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--line); padding-top:16px; margin-bottom:16px;">
+      <b>Verified Credentials</b>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+        <span class="pill">SQL (Intermediate)</span>
+        <span class="pill">Data Analytics</span>
+        <span class="pill">Python</span>
+      </div>
+    </div>
+    <div>
+      <button class="btn" style="width:100%" onclick="showToast('Portfolio link copied to clipboard!'); closeModal()">Copy Share Link</button>
+    </div>
+  `);
+}
+
+// --- UI Utilities ---
+function showToast(msg) {
+  const toast = document.getElementById('toastMsg');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// Analytics Animation on Scroll
+const chartObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      // Animate numbers
+      animateValue("counter1", 0, 1240, 1500);
+      animateValue("counter2", 0, 86, 1500);
+      document.getElementById('counter3').textContent = '74%';
+      
+      // Animate bars
+      document.querySelectorAll('.chart i').forEach(bar => {
+        bar.style.width = bar.getAttribute('data-w');
+      });
+      chartObserver.disconnect();
     }
   });
-  resultEl.textContent = "You have " + have + " of " + skills.length + " skills for this role.";
-  fillEl.style.width = Math.round(have / skills.length * 100) + "%";
+});
+chartObserver.observe(document.getElementById('analytics'));
+
+function animateValue(id, start, end, duration) {
+  let startTimestamp = null;
+  const step = (timestamp) => {
+    if (!startTimestamp) startTimestamp = timestamp;
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    document.getElementById(id).innerHTML = Math.floor(progress * (end - start) + start);
+    if (progress < 1) window.requestAnimationFrame(step);
+  };
+  window.requestAnimationFrame(step);
 }
-
-roleSel.addEventListener("change", renderSkills);
-renderSkills();
-
-var tabs = document.querySelectorAll(".tab");
-tabs.forEach(function (t) {
-  t.addEventListener("click", function () {
-    tabs.forEach(function (x) { x.setAttribute("aria-selected", "false"); });
-    document.querySelectorAll(".panel").forEach(function (p) { p.classList.remove("on"); });
-    t.setAttribute("aria-selected", "true");
-    document.getElementById(t.getAttribute("aria-controls")).classList.add("on");
-  });
-});
-
-var filterBtns = document.querySelectorAll(".filters button");
-filterBtns.forEach(function (b) {
-  b.addEventListener("click", function () {
-    filterBtns.forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
-    b.setAttribute("aria-pressed", "true");
-    var f = b.getAttribute("data-f");
-    document.querySelectorAll("#jobsBody tr").forEach(function (row) {
-      row.style.display = (f === "all" || row.getAttribute("data-type") === f) ? "" : "none";
-    });
-  });
-});
 </script>
 </body>
 </html>
